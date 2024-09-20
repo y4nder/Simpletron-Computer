@@ -13,11 +13,11 @@ class Memory(object):
         indexOfAddress = -1
 
         for mRow in self._memoryInstance.getMemory():
-            if mRow.memoryCells[0].address <= address < mRow.memoryCells[-1].address + 1:
-                indexOfAddress = next((i for i, cell in enumerate(mRow.memoryCells) if cell.address == address), -1)
+            if mRow.memoryCells[0].getAddress() <= address < mRow.memoryCells[-1].getAddress() + 1:
+                indexOfAddress = next((i for i, cell in enumerate(mRow.memoryCells) if cell.getAddress() == address), -1)
                 if indexOfAddress != -1:
-                    mRow.memoryCells[indexOfAddress].data = "+" + data  
-                    print(f"storing value {data} to memory address: {mRow.rowNumber}{mRow.memoryCells[indexOfAddress].address}")
+                    mRow.memoryCells[indexOfAddress].setData("+" + data)
+                    print(f"storing value {data} to memory address: {mRow.rowNumber}{mRow.memoryCells[indexOfAddress].getAddress()}")
                     break
 
         if indexOfAddress == -1:
@@ -29,10 +29,10 @@ class Memory(object):
             
     def read_data(self, address: int) -> str:
         for mRow in self._memoryInstance.getMemory():
-            if mRow.memoryCells[0].address <= address < mRow.memoryCells[-1].address + 1:
-                indexOfAddress = next((i for i, cell in enumerate(mRow.memoryCells) if cell.address == address), -1)
+            if mRow.memoryCells[0].getAddress() <= address < mRow.memoryCells[-1].getAddress() + 1:
+                indexOfAddress = next((i for i, cell in enumerate(mRow.memoryCells) if cell.getAddress() == address), -1)
                 if indexOfAddress != -1:
-                    return mRow.memoryCells[indexOfAddress].data
+                    return mRow.memoryCells[indexOfAddress].getData()
 
         return "Address not found"
 

@@ -3,8 +3,17 @@ memoryCellLimit = 10
 
 class MemoryCell(object):
     def __init__(self, address: int):
-        self.address = address
-        self.data: str = "+0000"
+        self._address = address
+        self._data: str = "+0000"
+        
+    def getAddress(self) -> int:
+        return self._address
+        
+    def setData(self, data: str) -> None:
+        self._data = data
+        
+    def getData(self) -> str:
+        return self._data
         
     def __str__(self) -> str:
         return self.data
