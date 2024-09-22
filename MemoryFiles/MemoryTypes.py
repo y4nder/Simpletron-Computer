@@ -27,9 +27,15 @@ class MemoryRow(object):
 
 class MasterMemory(object):
     def __init__(self):
-        self.memory = [MemoryRow(x) for x in range(0, memoryRowLimit)]
-        self.memoryRowLimit = memoryRowLimit
-        self.memoryCellLimit = memoryCellLimit
+        self._memory = [MemoryRow(x) for x in range(0, memoryRowLimit)]
+        self._memoryRowLimit = memoryRowLimit
+        self._memoryCellLimit = memoryCellLimit
+        
+    def getMemoryRowLimit(self) -> int:
+        return self._memoryRowLimit
+    
+    def getMemoryCellLimit(self) -> int:
+        return self._memoryCellLimit
         
     def getMemory(self) -> list[MemoryRow]:
-        return self.memory
+        return self._memory

@@ -4,7 +4,7 @@
 """
 from MemoryFiles.MemoryTypes import MasterMemory as MainMemory
 from MemoryFiles.MemoryValidator import MemoryValidator as Validator
-from GUI.CLI import *
+from GUI.CLI import memorydumper as visualizeMemory_CLI
 
 class Memory(object):
     def __init__(self):
@@ -50,7 +50,7 @@ class Memory(object):
         
 
     def dump(self)->bool:
-        memorydumper(self._memoryInstance)
+        visualizeMemory_CLI(self._memoryInstance)
         return True
         
      

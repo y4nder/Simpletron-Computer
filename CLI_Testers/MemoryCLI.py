@@ -30,7 +30,7 @@ def dump_memory(memory_api: MemoryAPI):
     print("Memory dumped successfully." if success else "Failed to dump memory_api.")
 
 
-def main():
+def memoryCLI():
     memory_api = MemoryAPI()
     options = {
         '1': ("Store Data", store_data),
@@ -57,7 +57,3 @@ def main():
         _, action = options[choice]
         if action:
             action(memory_api)
-
-
-if __name__ == "__main__":
-    main()

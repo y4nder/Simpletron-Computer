@@ -2,7 +2,7 @@ from MemoryFiles.MemoryTypes import MasterMemory
 
 def memorydumper(masterMemory: MasterMemory) -> None:
     print("Memory Dump:")
-    _memoryDumpHeaderRenderer(masterMemory.memoryCellLimit)
+    _memoryDumpHeaderRenderer(masterMemory._memoryCellLimit)
     _memoryRowRenderer(masterMemory)
 
 def _memoryDumpHeaderRenderer(memoryCellLimit: int) -> None:
@@ -13,7 +13,7 @@ def _memoryDumpHeaderRenderer(memoryCellLimit: int) -> None:
     print("")  # Move to the next line after printing headers
 
 def _memoryRowRenderer(masterMemory: MasterMemory) -> None:
-    for memoryRow in masterMemory.memory:
+    for memoryRow in masterMemory._memory:
         # Print the row number followed by '0' with proper spacing (4 for row number, 1 for 0)
         print(f"{memoryRow.memoryCells[0].getAddress() // 10:5}0", end="  ")  # Row number with 4 spaces width
         for memoryCell in memoryRow.memoryCells:

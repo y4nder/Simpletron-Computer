@@ -27,7 +27,7 @@ class MemoryValidator:
             addr_int = int(address)
             
             # Check if the address is between 0 and 99
-            if 0 <= addr_int < (self._memory.memoryRowLimit * self._memory.memoryCellLimit):
+            if 0 <= addr_int < (self._memory.getMemoryRowLimit() * self._memory.getMemoryCellLimit()):
                 return True
             else:
                 print(f"Address {addr_int} is out of bounds. Must be between 0 and 99.")
