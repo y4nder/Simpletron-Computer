@@ -8,13 +8,7 @@ class MemoryCell(object):
         
     def getAddress(self) -> int:
         return self._address
-        
-    def setData(self, data: str) -> None:
-        self._data = data
-        
-    def getData(self) -> str:
-        return self._data
-        
+                
     def __str__(self) -> str:
         return self._data
     
