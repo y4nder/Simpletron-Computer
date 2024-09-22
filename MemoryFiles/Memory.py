@@ -1,45 +1,57 @@
-'''
+"""
     LUBGUBAN, Leander Lorenz B. BSCS3
 	Simpletron Memory
-'''
+"""
 from MemoryFiles.MemoryTypes import MasterMemory as MainMemory
+from MemoryFiles.MemoryValidator import MemoryValidator as Validator
 from GUI.CLI import *
 
 class Memory(object):
     def __init__(self):
         self._memoryInstance = MainMemory()
+        self._validator = Validator(self._memoryInstance)
         
-    def store_data(self, address: int, data: str) -> bool:
-        indexOfAddress = -1
-
+    def _findCell(self, address: int):
         for mRow in self._memoryInstance.getMemory():
-            if mRow.memoryCells[0].getAddress() <= address < mRow.memoryCells[-1].getAddress() + 1:
-                indexOfAddress = next((i for i, cell in enumerate(mRow.memoryCells) if cell.getAddress() == address), -1)
-                if indexOfAddress != -1:
-                    mRow.memoryCells[indexOfAddress].setData("+" + data)
-                    print(f"storing value {data} to memory address: {mRow.rowNumber}{mRow.memoryCells[indexOfAddress].getAddress()}")
-                    break
-
-        if indexOfAddress == -1:
+            if mRow.memoryCells[0]._address <= address < mRow.memoryCells[-1]._address + 1:
+                index_of_address = next((i for i, cell in enumerate(mRow.memoryCells) if cell._address == address), -1)
+                if index_of_address != -1:
+                    return mRow.memoryCells[index_of_address]
+                    
+            
+    def store_data(self, address: int, data: str) -> bool:
+        validAddress = self._validator.validateAddress(address)
+        if not validAddress:
+            return False
+        
+        validData = self._validator.validateData(data)
+        if not validData:
+            return False
+        
+        memoryCell = self._findCell(address)
+        if not memoryCell:
             print("Address not found")
             return False
         else:
-            print("store success!")
-            return True   
+            memoryCell.setData(data)
+            return True
+
             
     def read_data(self, address: int) -> str:
-        for mRow in self._memoryInstance.getMemory():
-            if mRow.memoryCells[0].getAddress() <= address < mRow.memoryCells[-1].getAddress() + 1:
-                indexOfAddress = next((i for i, cell in enumerate(mRow.memoryCells) if cell.getAddress() == address), -1)
-                if indexOfAddress != -1:
-                    return mRow.memoryCells[indexOfAddress].getData()
+        validAddress = self._validator.validateAddress(address)
+        if not validAddress:
+            return False
+        
+        memoryCell = self._findCell(address)
+        if not memoryCell:
+            return "Address not found"
+        else:
+            return memoryCell.getData()
+        
 
-        return "Address not found"
-
-    
-    
     def dump(self)->bool:
         memorydumper(self._memoryInstance)
+        return True
         
      
  

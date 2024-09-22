@@ -16,13 +16,19 @@ class MemoryCell(object):
         return self._data
         
     def __str__(self) -> str:
-        return self.data
+        return self._data
+    
+    def setData(self, data: str):
+        self._data = "+" + data
+        
+    def getData(self):
+        return self._data
     
     
 class MemoryRow(object):
-    def __init__(self, rowNumber: int):
-        self.rowNumber = rowNumber
-        self.memoryCells = [MemoryCell(rowNumber * memoryCellLimit + x) for x in range(memoryCellLimit)]
+    def __init__(self, row_number: int):
+        self.rowNumber = row_number
+        self.memoryCells = [MemoryCell(row_number * memoryCellLimit + x) for x in range(memoryCellLimit)]
         
 
 class MasterMemory(object):
