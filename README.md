@@ -1,55 +1,48 @@
 # Memory Component
 
-This repository contains a `Memory` class that provides an abstraction for storing and retrieving data at specific memory addresses, as well as dumping the contents of the memory for debugging purposes. The `Memory` class interacts with a `MainMemory` instance, handling the low-level details of memory management.
-
-## Main Functionalities
-
--   **Store Data**: Store data at a specific memory address.
--   **Read Data**: Read and return the data from a specified memory address.
--   **Dump Memory**: Dump the entire memory content.
+This section defines a `Memory` class that manages memory operations using a `MainMemory` instance and a `Validator`. It provides methods to store and read data from memory cells and to visualize the memory state
 
 ## Example Usage
 
 ```python
-# Initialize memory
 memory = Memory()
 
-# Store data at address 10
+# Store data in memory
 success = memory.store_data(10, "1234")
-if success:
-    print("Data stored successfully.")
-else:
-    print("Failed to store data.")
+print(success)  # Expected output: True if the address and data are valid, otherwise False
 
-# Read data from address 10
+# Read data from memory
 data = memory.read_data(10)
-print(f"Data at address 10: {data}")
+print(data)  # Expected output: "1234" if the address is valid and data is stored, otherwise "Address not found"
 
-# Dump the entire memory content
-memory.dump()
+# Dump memory state
+memory.dump()  # Expected output: Visual representation of the memory state
 ```
 
 ## Methods
 
-### `__init__()`
+### `_findCell`
 
--   Initializes a `Memory` instance by creating an instance of `MainMemory`.
+-   Finds and returns the memory cell for a given address.
 
 ### `store_data(address: int, data: str) -> bool`
 
--   Stores a string `data` at a specified memory `address`.
--   Returns `True` if the data is successfully stored, otherwise returns `False`.
+-   Validates the address and data, then stores the data in the appropriate memory cell.
 
 ### `read_data(address: int) -> str`
 
--   Reads and returns the data stored at the specified memory `address`.
+-   Validates the address and retrieves the data from the appropriate memory cell.
 
 ### `dump()`
 
--   Dumps the entire memory content using the `memorydumper` function.
+-   Visualizes the current state of the memory using a CLI tool.
 
 ## Fields
 
 ### `_memoryInstance`
 
--   An instance of `MainMemory` that manages memory rows and cells.
+-   An instance of `MainMemory` that represents the memory structure
+
+### `_validator`
+
+-   An instance of `Validator` used to validate addresses and data
