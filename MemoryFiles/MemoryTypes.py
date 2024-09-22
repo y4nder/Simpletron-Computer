@@ -3,39 +3,44 @@ memoryCellLimit = 10
 
 class MemoryCell(object):
     def __init__(self, address: int):
-        self._address = address
-        self._data: str = "+0000"
+        self.__address = address
+        self.__data: str = "+0000"
         
     def getAddress(self) -> int:
-        return self._address
+        return self.__address
                 
     def __str__(self) -> str:
-        return self._data
+        return self.__data
     
     def setData(self, data: str):
-        self._data = "+" + data
+        self.__data = "+" + data
         
     def getData(self):
-        return self._data
+        return self.__data
     
     
 class MemoryRow(object):
     def __init__(self, row_number: int):
-        self.rowNumber = row_number
-        self.memoryCells = [MemoryCell(row_number * memoryCellLimit + x) for x in range(memoryCellLimit)]
-        
+        self.__rowNumber = row_number
+        self.__memoryCells = [MemoryCell(row_number * memoryCellLimit + x) for x in range(memoryCellLimit)]
+    
+    def getRowNumber(self) -> int:
+        return self.__rowNumber
+    
+    def getMemoryCells(self) -> list[MemoryCell]:
+        return self.__memoryCells
 
 class MasterMemory(object):
     def __init__(self):
-        self._memory = [MemoryRow(x) for x in range(0, memoryRowLimit)]
-        self._memoryRowLimit = memoryRowLimit
-        self._memoryCellLimit = memoryCellLimit
+        self.__memory = [MemoryRow(x) for x in range(0, memoryRowLimit)]
+        self.__memoryRowLimit = memoryRowLimit
+        self.__memoryCellLimit = memoryCellLimit
         
     def getMemoryRowLimit(self) -> int:
-        return self._memoryRowLimit
+        return self.__memoryRowLimit
     
     def getMemoryCellLimit(self) -> int:
-        return self._memoryCellLimit
+        return self.__memoryCellLimit
         
     def getMemory(self) -> list[MemoryRow]:
-        return self._memory
+        return self.__memory
