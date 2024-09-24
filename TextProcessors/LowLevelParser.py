@@ -1,8 +1,10 @@
-class Parser(object):
-    def __init__(self):
-        pass
-        
-    def startParse(self, fileAddress: str):
+from TextProcessors.IParser import IParser
+
+class LowLevelParser(IParser):
+    def parse(self, fileAddress: str):
+        return self.__startParse(fileAddress)
+
+    def __startParse(self, fileAddress: str):
         print("-"*50)
         print(f"\nparsing the file: {fileAddress}\n")
         splittedWords = []

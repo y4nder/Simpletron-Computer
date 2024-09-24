@@ -2,11 +2,12 @@
     LUBGUBAN, Leander Lorenz B. BSCS3
 	Simpletron Memory
 """
+from MemoryFiles.IMemory import IMemory
 from MemoryFiles.MemoryTypes import MasterMemory as MainMemory
 from MemoryFiles.MemoryValidator import MemoryValidator as Validator
 from GUI.CLI import memorydumper as visualizeMemory_CLI
 
-class Memory(object):
+class Memory(IMemory):
     def __init__(self):
         self.__memoryInstance = MainMemory()
         self.__validator = Validator(self.__memoryInstance)
@@ -23,10 +24,10 @@ class Memory(object):
                     return None
         return None
 
-    def __findIndexOfAddress(self, address, mRow):
+    def __findIndexOfAddress(self, address: str, mRow):
         return next((i for i, cell in enumerate(mRow.getMemoryCells()) if cell.getAddress() == address), -1)
 
-    def __currentRowMatchesAddress(self, address, mRow) -> bool:
+    def __currentRowMatchesAddress(self, address: str, mRow) -> bool:
         return mRow.getMemoryCells()[0].getAddress() <= address < mRow.getMemoryCells()[-1].getAddress() + 1
     
     def __addressValidator(self, address: str) -> bool:
@@ -74,6 +75,6 @@ class Memory(object):
         visualizeMemory_CLI(self.__memoryInstance)
         return True
         
-     
+    
  
  
