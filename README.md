@@ -46,3 +46,40 @@ memory.dump()  # Expected output: Visual representation of the memory state
 ### `_validator`
 
 -   An instance of `Validator` used to validate addresses and data
+
+---
+
+# MemoryLoader
+
+The `MemoryLoader` class is responsible for loading instructions from a file into memory. It uses a parser to read and parse the instructions and then stores them in memory.
+
+## Example Usage
+
+```python
+from MemoryFiles.MemoryLoader import MemoryLoader
+from MemoryFiles.IMemory import IMemory
+from TextProcessors.IParser import IParser
+
+class Memory(IMemory):
+    def store_data(self, address: int, data: str) -> bool:
+        # Implementation here
+        return True
+
+    def read_data(self, address: int) -> str:
+        # Implementation here
+        return "data"
+
+    def dump(self) -> bool:
+        # Implementation here
+        return True
+
+class Parser(IParser):
+    def parse(self, fileAddress: str) -> list[Instruction]:
+        # Implementation here
+        return [Instruction(0, "data")]
+
+memory = Memory()
+parser = Parser()
+loader = MemoryLoader(memory, parser)
+loader.load("path/to/file")
+```
