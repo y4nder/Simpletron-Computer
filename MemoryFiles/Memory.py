@@ -8,8 +8,8 @@ from MemoryFiles.MemoryValidator import MemoryValidator as Validator
 from GUI.CLI import memorydumper as visualizeMemory_CLI
 
 class Memory(IMemory):
-    def __init__(self):
-        self.__memoryInstance = MainMemory()
+    def __init__(self, memoryRows: int = 10, memoryCells: int = 10):
+        self.__memoryInstance = MainMemory(memoryCells=memoryCells, memoryRows=memoryRows)
         self.__validator = Validator(self.__memoryInstance)
         
     # Helper Methods
