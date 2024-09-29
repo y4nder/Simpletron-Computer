@@ -2,9 +2,9 @@
     LUBGUBAN, Leander Lorenz B. BSCS3
 	Simpletron Memory
 """
-from MemoryFiles.IMemory import IMemory
-from MemoryFiles.MemoryTypes import MasterMemory as MainMemory
-from MemoryFiles.MemoryValidator import MemoryValidator as Validator
+from MemoryFiles.Interface.IMemory import IMemory
+from MemoryFiles.Memories.MemoryTypes import MasterMemory as MainMemory
+from MemoryFiles.Validator.MemoryValidator import MemoryValidator as Validator
 from GUI.CLI import memorydumper as visualizeMemory_CLI
 
 class Memory(IMemory):

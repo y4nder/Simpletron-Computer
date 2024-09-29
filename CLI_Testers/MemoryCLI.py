@@ -1,4 +1,4 @@
-from MemoryFiles.Memory import Memory as MemoryAPI
+from MemoryFiles.Memories.Memory import Memory as MemoryAPI
 
 def __get_input(prompt: str) -> str:
     value = input(prompt).strip()

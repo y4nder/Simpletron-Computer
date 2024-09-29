@@ -1,4 +1,6 @@
-from MemoryFiles.MemoryTypes import MasterMemory
+
+from MemoryFiles.Memories.MemoryTypes import MasterMemory
+
 
 class MemoryValidator:
     def __init__(self, memory: MasterMemory):

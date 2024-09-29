@@ -1,6 +1,5 @@
-from MemoryFiles.IMemory import IMemory
+from MemoryFiles.Interface.IMemory import IMemory
 from TextProcessors.IParser import IParser
-from TextProcessors.Instruction import Instruction
 
 class MemoryLoader(object):
     def __init__(self, memory:IMemory, parser:IParser):
