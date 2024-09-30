@@ -13,8 +13,9 @@ class LowLevelParser(IParser):
             data = file.readlines()
             for line in data:
                 word = line.split()
-                splittedWords.append(word)
-                print(word)
+                if word:
+                    splittedWords.append(word)
+                    print(word) 
         return self.__cleanUp(splittedWords)
 
     def __cleanUp(self, listOfCommands: list[list[str]]) -> list[Instruction]:
@@ -29,10 +30,11 @@ class LowLevelParser(IParser):
                     break
                 else:
                     line.append(command)
-            instruction = Instruction(int(line[0]),line[1])      
-            sanitizedCommands.append(instruction)
-            line = []
-            lineNumber += 1
+            if line:
+                instruction = Instruction(int(line[0]),line[1])      
+                sanitizedCommands.append(instruction)
+                line = []
+                lineNumber += 1
         return sanitizedCommands
             
 
