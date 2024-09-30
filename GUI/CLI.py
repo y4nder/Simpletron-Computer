@@ -37,5 +37,6 @@ def __newMemoryRowRenderer(memory: list) -> None:
         print(f"{i // 10:5}0", end="  ")
         for j in range(i, i + 10):
             if j < len(memory):  # Ensure we don’t go out of bounds
-                print(f"{memory[j]:>7}", end="  ")  # Print memory cell data
+                data = f"+{memory[j]}"
+                print(f"{data:>7}", end="  ")  # Print memory cell data
         print("")  # Newline after each row

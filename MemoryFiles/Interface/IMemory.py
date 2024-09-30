@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 class IMemory(ABC):
+    
     @abstractmethod
     def store_data(self, address: int, data: str)-> bool:
         pass

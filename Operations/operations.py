@@ -105,4 +105,7 @@ def jump_if_zero(controller: Controller, address):
 def halt(controller: Controller, _):
     """Halts the program."""
     print("Program halted.")
+    print()
+    controller.getProcessor().dump()
+    controller.getMemory().dump()
     exit()

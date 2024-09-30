@@ -50,4 +50,14 @@ class Processor(object):
     @operand.setter
     def operand(self, value):
         self.__operand = value
+    
+    def dump(self):
+        print("REGISTERS: ")
+        print(f"accumulator: +{self.__formatter(self.accumulator)}")
+        print(f"programCounter: {self.__formatter(self.programCounter, zeroes=2)}")
+        print(f"instructionRegister: +{self.__formatter(self.instructionRegister)}")
+        print(f"operationCode: {self.__formatter(self.operationCode, zeroes=2)}")
+        print(f"operand: {self.__formatter(self.operand, zeroes=2)}")
         
+    def __formatter(self, data, zeroes = 4):
+        return str(data).zfill(zeroes)

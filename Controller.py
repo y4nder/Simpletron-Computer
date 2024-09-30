@@ -3,11 +3,12 @@ from ProcessorFiles.Processor import Processor
 
 
 class Controller(object):
-    def __init__(self, processor: Processor, memory: IMemory, operationCodes: dict[int, any]):
+    def __init__(self, processor: Processor, memory: IMemory, operationCodes: dict[int, any], debug: bool = False):
+        self.debug = debug
         self.__processor = processor
         self.__memory = memory
         self.__operationCodes = operationCodes
-        
+                
     def getProcessor(self) -> Processor:
         return self.__processor
     
@@ -17,8 +18,19 @@ class Controller(object):
     def run(self):
         while True:
             instruction = self.__fetch_instruction()
+            
+            if self.debug:
+                print(f"Executing {instruction} ...")
+            
             operation_code, address = self.__decodeInstructions(instruction)
+            self.__update_processor_state(instruction, operation_code, address)
             self.__execute_instruction(operation_code, address)
+            
+            if self.debug:
+                print() 
+                self.__processor.dump()
+                self.__memory.dump()
+                input("\nPress any key to continue...\n")
         
     def __fetch_instruction(self):
         instruction = self.__memory.read_data(self.__processor.programCounter)
@@ -36,6 +48,9 @@ class Controller(object):
         else:
             raise ValueError(f"Invalid operation code: {operation_code}")
 
-
+    def __update_processor_state(self, instruction, operation_code, address):
+        self.__processor.instructionRegister = instruction
+        self.__processor.operationCode = operation_code
+        self.__processor.operand = address 
 
 
