@@ -50,6 +50,9 @@ class Processor(object):
     @operand.setter
     def operand(self, value):
         self.__operand = value
+        
+    def incrementProgramCounter(self) -> None:
+        self.programCounter += 1
     
     def dump(self):
         print("REGISTERS: ")
