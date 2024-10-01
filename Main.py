@@ -9,15 +9,15 @@ from os import system
 
     
 def testOperationCodes():
-    debug: bool = False
+    debug: bool = True
     #create instance of processor and memory
     processor = Processor()
     memory = MemoryFactory.MemorySingleList()
     
     #load memory with sml program
     file = "testCodes/FactorialM.sml"
-    parser = ParserFactory.MnemonicParser(debug=True)
-    memoryLoader = MemoryLoader(memory, parser, debug=True)
+    parser = ParserFactory.MnemonicParser(debug=debug)
+    memoryLoader = MemoryLoader(memory, parser, debug=debug)
     memoryLoader.load(file)
     
     #define the library

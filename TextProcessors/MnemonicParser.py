@@ -14,8 +14,9 @@ class MnemonicParser(IParser):
         return self.__start(fileAddress)
     
     def __start(self, fileAddress: str):
-        print("-"*50)
-        print(f"parsing file {fileAddress}")
+        if(self.debug):
+            print("-"*50)
+            print(f"parsing file {fileAddress}")
         
         splittedWords = []
         with open(fileAddress, "r") as file:
@@ -23,14 +24,19 @@ class MnemonicParser(IParser):
             for line in data:
                 word = line.split()
                 splittedWords.append(word)
-                print(word)
+                
+                if self.debug:
+                    print(word)
+                    
         sanitizedCommands = self.__cleanUp(splittedWords)
         return sanitizedCommands    
                 
     
     def __cleanUp(self, listOfCommands: list[list[str]]):
-        print("-"*50)
-        print("\nperform clean up\n")
+        if self.debug:
+            print("-"*50)
+            print("\nperform clean up\n")
+            
         sanitizedCommands = []
         for lineCommand in listOfCommands:
             line = []
@@ -41,12 +47,17 @@ class MnemonicParser(IParser):
                     line.append(command)
             if line:
                 sanitizedCommands.append(line)
-                print(line)
+                
+                if self.debug:
+                    print(line)
+                    
                 line = []
         return self.__assignMnemonic(sanitizedCommands)
                 
     def __assignMnemonic(self, sanitizedCommands: list[list[str]]):
-        print("\nassigning mnemonics\n")
+        if self.debug:
+            print("\nassigning mnemonics\n")
+            
         convertedCommands: list[Instruction] = []
         for lineCommand in sanitizedCommands:
             address = lineCommand[0]
