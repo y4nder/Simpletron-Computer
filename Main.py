@@ -2,21 +2,22 @@ from Controller import Controller
 from MemoryFiles.MemoryFactory import MemoryFactory
 from MemoryFiles.MemoryLoader import MemoryLoader 
 from ProcessorFiles.Processor import Processor
+from TextProcessors.MnemonicParser import MnemonicParser
 from TextProcessors.ParserFactory import ParserFactory
 from Operations.OperationLibrary import OperationLibrary
 from os import system
 
     
 def testOperationCodes():
-    debug: bool = True
+    debug: bool = False
     #create instance of processor and memory
     processor = Processor()
     memory = MemoryFactory.MemorySingleList()
     
     #load memory with sml program
-    file = "testCodes/Factorial.sml"
-    parser = ParserFactory.LowLevelParser(debug=debug)
-    memoryLoader = MemoryLoader(memory, parser, debug=debug)
+    file = "testCodes/FactorialM.sml"
+    parser = ParserFactory.MnemonicParser(debug=True)
+    memoryLoader = MemoryLoader(memory, parser, debug=True)
     memoryLoader.load(file)
     
     #define the library
@@ -30,6 +31,14 @@ def testOperationCodes():
     
     #run the program
     controller.run()
+    
+def testMnemonicParser():
+    file = "testCodes/mnemonics.sml"
+    mp = MnemonicParser()
+    p = mp.parse(file)
+    for x in p:
+        print(x)
+    
     
 if __name__ == "__main__":
     system("cls")

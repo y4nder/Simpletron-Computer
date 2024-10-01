@@ -4,6 +4,7 @@ class OperationLibrary(object):
     OPERATION_CODES_DEFAULT : dict[int, any] = {
         10: op.read,
         11: op.write,
+        12: op.write_acc,
         20: op.loadM,
         21: op.store,
         22: op.loadI,

@@ -64,7 +64,7 @@ class Memory(IMemory):
         if not memoryCell:
             return ""
         else:
-            return memoryCell.getData()
+            return int(memoryCell.getData())
         
     def dump(self)->bool:
         validMemoryStatus =  self.__validator.validateMemoryInstance()

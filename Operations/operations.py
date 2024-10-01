@@ -1,4 +1,5 @@
 # operations.py
+
 from Controller import Controller
 
 
@@ -12,6 +13,12 @@ def write(controller: Controller, address):
     """Writes the content of the memory address to output."""
     value = controller.getMemory().read_data(address)
     print(f"Memory[{address}] = {value}")
+    controller.getProcessor().incrementProgramCounter()
+    
+def write_acc(controller: Controller, _):
+    """Writes the content of the accumulator."""
+    value = controller.getProcessor().accumulator
+    print(f"accumulator: {value}")
     controller.getProcessor().incrementProgramCounter()
 
 def loadM(controller: Controller, address):

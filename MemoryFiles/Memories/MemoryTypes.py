@@ -10,7 +10,7 @@ class MemoryCell(object):
         return self.__data
     
     def setData(self, data: str):
-        self.__data = "+" + data
+        self.__data = "+" + str(data)
         
     def getData(self):
         return self.__data

@@ -3,7 +3,7 @@ from ProcessorFiles.Processor import Processor
 
 
 class Controller(object):
-    def __init__(self, processor: Processor, memory: IMemory, operationCodes: dict[int, any], debug: bool = False):
+    def __init__(self, processor: Processor, memory: IMemory, operationCodes, debug: bool = False):
         self.debug = debug
         self.__processor = processor
         self.__memory = memory

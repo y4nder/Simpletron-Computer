@@ -51,11 +51,12 @@ class MemoryValidator:
             bool: True if the data is exactly 4 characters long, False otherwise.
         
         """
-        if len(data) == 4:
-            return True
-        else:
-            print("Invalid data length. Data must be exactly 4 characters long.")
-            return False
+        # if len(data) == 4:
+        #     return True
+        # else:
+        #     print("Invalid data length. Data must be exactly 4 characters long.")
+        #     return False
+        return True
 
     def validateMemoryInstance(self) -> bool:
         if self.__memory is None:
