@@ -1,9 +1,15 @@
 from Operations import operations as op
+from typing import Callable
 
 class OperationLibrary(object):
-    OPERATION_CODES_DEFAULT : dict[int, any] = {
+    """ Dictionary mapping operation codes to corresponding functions.
+        Each key represents an operation code, and the value is the function to execute for that code.
+        Keys are integers representing operation codes, and values are functions from the 'op' module.
+    """
+    OPERATION_CODES_DEFAULT : dict[int, Callable[[], None]] = {
         10: op.read,
         11: op.write,
+        12: op.write_acc,
         20: op.loadM,
         21: op.store,
         22: op.loadI,
@@ -22,3 +28,4 @@ class OperationLibrary(object):
         42: op.jump_if_zero,
         43: op.halt   
     }
+    # Author: [Leander Lorenz Lubguban]
