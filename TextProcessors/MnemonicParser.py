@@ -5,7 +5,7 @@ from TextProcessors.LowLevelParser import LowLevelParser
 
 
 class MnemonicParser(IParser):
-    def __init__(self, lowLevelParser: IParser = LowLevelParser(), mnemonicLibray = MnemonicLibrary, debug: bool = False):
+    def __init__(self, lowLevelParser: IParser = LowLevelParser(), mnemonicLibray = MnemonicLibrary, debug: bool = True):
         super().__init__(debug)
         self.lowlevelParser = lowLevelParser
         self.mneomonicLibrary = mnemonicLibray.DEFAULT_MNEMONIC

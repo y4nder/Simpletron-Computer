@@ -20,5 +20,6 @@ class MnemonicLibrary(object):
         "jmp"   : 40,
         "jl"    : 41,
         "jz"    : 42,
-        "halt"  : 43
+        "halt"  : 43,
+        "clr"   : 50
     }

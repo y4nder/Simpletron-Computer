@@ -6,17 +6,18 @@ from TextProcessors.MnemonicParser import MnemonicParser
 from TextProcessors.ParserFactory import ParserFactory
 from Operations.OperationLibrary import OperationLibrary
 from os import system
+import sys
 
     
-def testOperationCodes():
-    debug: bool = True
+def testOperationCodes(fileAddress: str):
+    debug: bool = False
     #create instance of processor and memory
     processor = Processor()
     memory = MemoryFactory.MemorySingleList()
     
     #load memory with sml program
-    file = "testCodes/FactorialM.sml"
-    parser = ParserFactory.MnemonicParser(debug=debug)
+    file = fileAddress
+    parser = ParserFactory.LowLevelParser(debug=debug)
     memoryLoader = MemoryLoader(memory, parser, debug=debug)
     memoryLoader.load(file)
     
@@ -31,7 +32,14 @@ def testOperationCodes():
     
     #run the program
     controller.run()
-    
+            
+def startWithFileName():
+    if len(sys.argv) != 2:
+        print("Usage: python Main.py <filename>")
+    else:
+        header = "testCodes/" + sys.argv[1]
+        testOperationCodes(header)
+        
 def testMnemonicParser():
     file = "testCodes/mnemonics.sml"
     mp = MnemonicParser()
@@ -42,4 +50,4 @@ def testMnemonicParser():
     
 if __name__ == "__main__":
     system("cls")
-    testOperationCodes()
+    startWithFileName()
