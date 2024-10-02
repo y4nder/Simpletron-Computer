@@ -1,4 +1,4 @@
-00    read   14    	
+00    read   14    	;get input and store to address 14 (variable n)
 01    loadI  01    	
 02    store  15    	
 03    load   14    	

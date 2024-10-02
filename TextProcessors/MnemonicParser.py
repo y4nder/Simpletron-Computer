@@ -1,38 +1,39 @@
 from Operations.MnemonicLibrary import MnemonicLibrary
 from TextProcessors.IParser import IParser
 from TextProcessors.Instruction import Instruction
-from TextProcessors.LowLevelParser import LowLevelParser
-
 
 class MnemonicParser(IParser):
-    def __init__(self, lowLevelParser: IParser = LowLevelParser(), mnemonicLibray = MnemonicLibrary, debug: bool = True):
+    def __init__(self, mnemonicLibray = MnemonicLibrary, debug: bool = True):
         super().__init__(debug)
-        self.lowlevelParser = lowLevelParser
-        self.mneomonicLibrary = mnemonicLibray.DEFAULT_MNEMONIC
+        self.mnemonicLibrary = mnemonicLibray.DEFAULT_MNEMONIC
         
     def parse(self, fileAddress: str) -> list[Instruction]:
         return self.__start(fileAddress)
     
-    def __start(self, fileAddress: str):
-        if(self.debug):
-            print("-"*50)
-            print(f"parsing file {fileAddress}")
-        
-        splittedWords = []
-        with open(fileAddress, "r") as file:
-            data = file.readlines()
-            for line in data:
-                word = line.split()
-                splittedWords.append(word)
-                
-                if self.debug:
-                    print(word)
+    def __start(self, fileAddress: str) -> list[Instruction]:
+        try:
+            if(self.debug):
+                print("-"*50)
+                print(f"parsing file {fileAddress}")
+            
+            splittedWords = []
+            with open(fileAddress, "r") as file:
+                data = file.readlines()
+                for line in data:
+                    word = line.split()
+                    splittedWords.append(word)
                     
-        sanitizedCommands = self.__cleanUp(splittedWords)
-        return sanitizedCommands    
+                    if self.debug:
+                        print(word)
+                        
+            return self.__cleanUp(splittedWords)
+        
+        except Exception as e:
+            print(f"Error occurred during file parsing: {e}")
+            return []
                 
     
-    def __cleanUp(self, listOfCommands: list[list[str]]):
+    def __cleanUp(self, listOfCommands: list[list[str]])-> list[Instruction]:
         if self.debug:
             print("-"*50)
             print("\nperform clean up\n")
@@ -41,7 +42,7 @@ class MnemonicParser(IParser):
         for lineCommand in listOfCommands:
             line = []
             for command in lineCommand:
-                if(command == ";"):
+                if(self.__isComment(command)):
                     break
                 else:
                     line.append(command)
@@ -50,11 +51,12 @@ class MnemonicParser(IParser):
                 
                 if self.debug:
                     print(line)
-                    
+                
                 line = []
+                
         return self.__assignMnemonic(sanitizedCommands)
                 
-    def __assignMnemonic(self, sanitizedCommands: list[list[str]]):
+    def __assignMnemonic(self, sanitizedCommands: list[list[str]])-> list[Instruction]:
         if self.debug:
             print("\nassigning mnemonics\n")
             
@@ -62,14 +64,15 @@ class MnemonicParser(IParser):
         for lineCommand in sanitizedCommands:
             address = lineCommand[0]
             mnemonic = lineCommand[1]
-            data = lineCommand[2]
-            
-            opcode = str(self.mneomonicLibrary[mnemonic]) + data
-            
+            data = lineCommand[2]    
+            opcode = str(self.mnemonicLibrary[mnemonic]) + data
             instuction = Instruction(int(address), opcode)
             convertedCommands.append(instuction)
             
         return convertedCommands
-                
+            
+    # helper methods
+    def __isComment(self, command: str) -> bool:
+        return command == ";" or command.startswith(";")
     
     

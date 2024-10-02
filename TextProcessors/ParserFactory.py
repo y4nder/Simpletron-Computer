@@ -3,8 +3,9 @@ from TextProcessors.LowLevelParser import LowLevelParser
 from TextProcessors.MnemonicParser import MnemonicParser
 
 class ParserFactory:
+    '''Parser for directly parsing simpletron operation codes'''
     def LowLevelParser(debug: bool = False) -> IParser:
         return LowLevelParser(debug)
     
     def MnemonicParser(debug: bool = False) -> IParser:
-        return MnemonicParser(debug)
+        return MnemonicParser(debug=debug)

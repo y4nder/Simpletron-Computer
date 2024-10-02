@@ -1,9 +1,10 @@
 from MemoryFiles.Interface.IMemory import IMemory
 from ProcessorFiles.Processor import Processor
+from typing import Callable
 
 
 class Controller(object):
-    def __init__(self, processor: Processor, memory: IMemory, operationCodes, debug: bool = False):
+    def __init__(self, processor: Processor, memory: IMemory, operationCodes: dict[int, Callable[[], None]], debug: bool = False):
         self.debug = debug
         self.__processor = processor
         self.__memory = memory
