@@ -15,8 +15,15 @@ class MemoryValidatorSingleList(IMemoryValidator):
             return False
     
     def validateInstruction(self, instruction: str) -> bool:
+        
+        # if isinstance(instruction, int):
+        #     instruction = str(instruction)
+        
+        # instruction = instruction.zfill(4)
+        
         # if(len(instruction) != 4):
-        #     print("invalid instruction")
+        #     print(f"invalid instruction {instruction}")
+        #     print(f"{type(instruction)}")
         #     return False
         return True
             

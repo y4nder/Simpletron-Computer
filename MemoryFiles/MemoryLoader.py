@@ -1,5 +1,6 @@
 from MemoryFiles.Interface.IMemory import IMemory
 from TextProcessors.IParser import IParser
+from TextProcessors.Instruction import Instruction
 
 class MemoryLoader(object):
     def __init__(self, memory:IMemory, parser:IParser, debug: bool = False):
@@ -15,9 +16,12 @@ class MemoryLoader(object):
         for instruction in parsedInstructions:
             if self.debug:
                 print(instruction)
+                
+            if not isinstance(instruction, Instruction):
+                raise TypeError("incorrect instruction type")            
         
-            address: int = instruction.getAddress()
-            instruction: str = instruction.getData()
+            address: int = instruction.address
+            instruction: str = instruction.data
             self.__memory.store_data(address, instruction)
         
         if self.debug:

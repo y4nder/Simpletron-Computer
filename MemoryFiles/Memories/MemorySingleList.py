@@ -24,8 +24,8 @@ class MemorySingleList(IMemory):
         if data.isdigit():  # Ensure the string only contains digits
             formattedData = data.zfill(4)
         else:
-            # Return False if the data is not numeric (handle this case accordingly)
-            return False
+            raise ValueError("input should be of type int")
+            
         
         # Store the formatted data in memory
         self.__memory[address] = formattedData

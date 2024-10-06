@@ -35,6 +35,7 @@ The Simpletron Computer is a simulated machine designed to execute basic machine
 ### Example Usage (Mnemonics Syntax)
 
 1. create a file in the folder `codes` and name it `<your_program_name>`, save it as `.sml`
+
     ```sml
     00  read    08    ; get input and store to address 08 (Variable A)
     01  read    09    ; get input and store to address 09 (Variable B)
@@ -48,17 +49,19 @@ The Simpletron Computer is a simulated machine designed to execute basic machine
     09  data    00    ; Variable B
     10  data    00    ; Result C
     ```
-2. change the parser in the `Simpletron.py` from `LowLevelParser()` to `MnemonicParser()`
-    ```python
-    from TextProcessors.ParserFactory import ParserFactory
-    ...
-    parser = ParserFactory.MnemonicParser(debug=debug)
-    ...
-    ```
-3. run in terminal
+
+2. run in terminal with argument `-mp`
     ```bash
-    py Simpletron.py <program_name>.sml
+    py Simpletron.py <program_name>.sml -mp
     ```
+
+#### Optional Debugger
+
+running the program with debugger lets you view how the file is parsed and how the memory and accumulators are updated.
+
+```bash
+py Simpletron.py <program_name>.sml -debug
+```
 
 ---
 

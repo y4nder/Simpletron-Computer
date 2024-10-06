@@ -2,22 +2,24 @@ from Controller import Controller
 from MemoryFiles.MemoryFactory import MemoryFactory
 from MemoryFiles.MemoryLoader import MemoryLoader 
 from ProcessorFiles.ProcessorFactory import ProcessorFactory
+from TextProcessors.IParser import IParser
 from TextProcessors.ParserFactory import ParserFactory
 from Operations.OperationLibrary import OperationLibrary
 from os import system
 import sys
+import argparse
 
     
-def run(fileAddress: str):
+def run(fileAddress: str, useMnemonic: bool, useDebug: bool):
     # change to True for debugging
-    debug: bool = False
+    debug: bool = useDebug
     
     #create instance of processor and memory
     processor = ProcessorFactory.Processor_DEFAULT()
     memory = MemoryFactory.MemorySingleList()
     
     #Create instance of a parser and a memoryloaoder 
-    parser = ParserFactory.LowLevelParser(debug=debug)
+    parser = defineParser(useMnemonic, useDebug)
     memoryLoader = MemoryLoader(memory, parser, debug=debug)
     
     # load memory with sml program
@@ -35,14 +37,26 @@ def run(fileAddress: str):
     
     #run the controller
     controller.run()
-            
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python Simpletron.py <filename>.sml")
+    
+def defineParser(useMnemonic: bool, useDebug: bool) -> IParser:
+    if useMnemonic:
+        return ParserFactory.MnemonicParser(debug = useDebug)
     else:
-        fileAddress = "codes/" + sys.argv[1]
-        run(fileAddress)
+        return ParserFactory.LowLevelParser(debug = useDebug)
+            
+def Main():
+    argsParser = argparse.ArgumentParser(description="run simpletron script")
+    argsParser.add_argument("fileAddress", type=str, help="name of the file ending with .sml")
+    argsParser.add_argument("-mp", action="store_true", help="choose mnemonic parser" )
+    argsParser.add_argument("-debug", action="store_true", help="Enable debug mode")
+    
+    args = argsParser.parse_args()
+    fileAddress = "codes/" + args.fileAddress
+    useMnemonic = args.mp
+    useDebug = args.debug
+    run(fileAddress, useMnemonic, useDebug)
+    
         
 if __name__ == "__main__":
     system("cls")
-    main()
+    Main()
