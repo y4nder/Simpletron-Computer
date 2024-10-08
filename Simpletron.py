@@ -1,62 +1,50 @@
+from os import system, path
 from Controller import Controller
 from MemoryFiles.MemoryFactory import MemoryFactory
 from MemoryFiles.MemoryLoader import MemoryLoader 
 from ProcessorFiles.ProcessorFactory import ProcessorFactory
-from TextProcessors.IParser import IParser
 from TextProcessors.ParserFactory import ParserFactory
 from Operations.OperationLibrary import OperationLibrary
-from os import system
-import sys
-import argparse
+from util.args_util import ArgumentFactory
 
     
-def run(fileAddress: str, useMnemonic: bool, useDebug: bool):
-    # change to True for debugging
-    debug: bool = useDebug
-    
-    #create instance of processor and memory
+def create_components(fileAddress: str, useMnemonic: bool, useDebug: bool, **kwargs) -> Controller:
     processor = ProcessorFactory.Processor_DEFAULT()
     memory = MemoryFactory.MemorySingleList()
+    parser = ParserFactory.GetParser(useMnemonic, debug=useDebug)
+    memoryLoader = MemoryLoader(memory, parser, debug=useDebug)
     
-    #Create instance of a parser and a memoryloaoder 
-    parser = defineParser(useMnemonic, useDebug)
-    memoryLoader = MemoryLoader(memory, parser, debug=debug)
+    try:
+        memoryLoader.load(fileAddress)
+    except Exception as e:
+        print(f"Error loading memory: {e}")
     
-    # load memory with sml program
-    memoryLoader.load(fileAddress)
+    codes = OperationLibrary.OPERATION_CODES_DEFAULT
+    controller = Controller(processor, memory, operationCodes=codes, debug=useDebug)
     
-    #define the library
-    library = OperationLibrary.OPERATION_CODES_DEFAULT
+    return controller
+
+def run(fileAddress: str, useMnemonic: bool, useDebug: bool, **kwargs) -> None:
+    controller = create_components(fileAddress, useMnemonic, useDebug, **kwargs)
     
-    #create controller instace and inject the processor, memory and library
-    controller = Controller(processor, memory, operationCodes=library, debug=debug)
-    
-    if(debug):
+    if(useDebug):
         print("-" * 50)
         print("executing file")
     
-    #run the controller
     controller.run()
+
+def main() -> None:
+    args = ArgumentFactory.DEFAULT_ARGUMENTS()
     
-def defineParser(useMnemonic: bool, useDebug: bool) -> IParser:
-    if useMnemonic:
-        return ParserFactory.MnemonicParser(debug = useDebug)
-    else:
-        return ParserFactory.LowLevelParser(debug = useDebug)
-            
-def Main():
-    argsParser = argparse.ArgumentParser(description="run simpletron script")
-    argsParser.add_argument("fileAddress", type=str, help="name of the file ending with .sml")
-    argsParser.add_argument("-mp", action="store_true", help="choose mnemonic parser" )
-    argsParser.add_argument("-debug", action="store_true", help="Enable debug mode")
+    if not args.filename.endswith('.sml'):
+        raise ValueError("Invalid file extension. File must end with '.sml'")
     
-    args = argsParser.parse_args()
-    fileAddress = "codes/" + args.fileAddress
-    useMnemonic = args.mp
-    useDebug = args.debug
+    fileAddress: str = path.join("codes", args.filename)
+    useMnemonic: bool = args.mp
+    useDebug: bool = args.debug
+
     run(fileAddress, useMnemonic, useDebug)
-    
         
 if __name__ == "__main__":
     system("cls")
-    Main()
+    main()

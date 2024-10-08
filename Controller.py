@@ -4,6 +4,10 @@ from typing import Callable
 
 
 class Controller(object):
+    '''
+        The `Controller` class orchestrates the interaction between a `Processor` and `IMemory` to execute instructions. 
+        It fetches, decodes, and executes instructions in a loop using provided operation codes.
+    '''
     def __init__(self, processor: Processor, memory: IMemory, operationCodes: dict[int, Callable[[], None]], debug: bool = False):
         self.debug = debug
         self.__processor = processor
