@@ -15,7 +15,7 @@ def write(controller: Controller, address, useDebug: bool = False):
         print("-"*100)
         print(f"Description: Read data from address {str(address).zfill(2)}\n")
     value = controller.getMemory().read_data(address)
-    print(f"Memory[{address}] = {value}")
+    print(f"\nMemory[{address}] = {value}")
     controller.getProcessor().incrementProgramCounter()
 
 def write_acc(controller: Controller, _, useDebug: bool = False):
@@ -164,6 +164,7 @@ def jump_if_zero(controller: Controller, address, useDebug: bool = False):
 
 def halt(controller: Controller, _, useDebug: bool = False):
     """Halts the program."""
+    print()
     if useDebug:
         print("-"*100)
         print("Description: Program halted\n")
