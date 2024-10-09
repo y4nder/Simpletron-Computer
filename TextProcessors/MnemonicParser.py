@@ -57,17 +57,19 @@ class MnemonicParser(IParser):
         return self.__assignMnemonic(sanitizedCommands)
                 
     def __assignMnemonic(self, sanitizedCommands: list[list[str]])-> list[Instruction]:
+        lineCount: int = 0
         if self.debug:
             print("\nassigning mnemonics\n")
             
         convertedCommands: list[Instruction] = []
         for lineCommand in sanitizedCommands:
-            address = lineCommand[0]
-            mnemonic = lineCommand[1]
-            data = lineCommand[2]    
+            address = lineCount
+            mnemonic = lineCommand[0]
+            data = lineCommand[1]    
             opcode = str(self.mnemonicLibrary[mnemonic]) + data
             instuction = Instruction(int(address), opcode)
             convertedCommands.append(instuction)
+            lineCount += 1
             
         return convertedCommands
             

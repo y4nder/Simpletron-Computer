@@ -38,8 +38,8 @@ class MemorySingleList(IMemory):
         else:
             return int(self.__memory[address])
     
-    def dump(self) -> bool:
-        visualizer(self.__memory)
+    def dump(self, pointer_index: int = None) -> bool:
+        visualizer(self.__memory, pointer_index)
         
         
     

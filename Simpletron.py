@@ -11,8 +11,8 @@ from util.args_util import ArgumentFactory
 def create_components(fileAddress: str, useMnemonic: bool, useDebug: bool, **kwargs) -> Controller:
     processor = ProcessorFactory.Processor_DEFAULT()
     memory = MemoryFactory.MemorySingleList()
-    parser = ParserFactory.GetParser(useMnemonic, debug=useDebug)
-    memoryLoader = MemoryLoader(memory, parser, debug=useDebug)
+    parser = ParserFactory.GetParser(useMnemonic, debug=False)
+    memoryLoader = MemoryLoader(memory, parser, debug=False)
     
     try:
         memoryLoader.load(fileAddress)

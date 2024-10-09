@@ -25,17 +25,24 @@ class Controller(object):
             instruction = self.__fetch_instruction()
             
             if self.debug:
+                print("-"*100)
                 print(f"Executing {instruction} ...")
             
             operation_code, address = self.__decodeInstructions(instruction)
             self.__update_processor_state(instruction, operation_code, address)
-            self.__execute_instruction(operation_code, address)
             
             if self.debug:
                 print() 
                 self.__processor.dump()
-                self.__memory.dump()
-                input("\nPress any key to continue...\n")
+                self.__memory.dump(self.__processor.programCounter)
+                
+            self.__execute_instruction(operation_code, address)
+            
+            if self.debug:
+                input("\nPress any key to continue...")
+                
+
+                
         
     def __fetch_instruction(self):
         instruction = self.__memory.read_data(self.__processor.programCounter)
@@ -49,7 +56,7 @@ class Controller(object):
     
     def __execute_instruction(self, operation_code, address):
         if operation_code in self.__operationCodes:
-            self.__operationCodes[operation_code](self, address)
+            self.__operationCodes[operation_code](self, address, useDebug = self.debug)
         else:
             raise ValueError(f"Invalid operation code: {operation_code}")
 

@@ -11,5 +11,5 @@ class IMemory(ABC):
         pass
     
     @abstractmethod
-    def dump(self) -> bool:
+    def dump(self, pointer_index: int = None) -> bool:
         pass

@@ -20,10 +20,10 @@ def __memoryRowRenderer(masterMemory: MasterMemory) -> None:
             print(f"{memoryCell.getData()}", end="  ")  
         print("")  
 
-def singleListMemoryDumper(memory: list) -> None:
+def singleListMemoryDumper(memory: list, pointer_index: int = None) -> None:
     print("Memory Dump:")
     __newMemoryDumpHeaderRenderer()
-    __newMemoryRowRenderer(memory)
+    __newMemoryRowRenderer(memory, pointer_index)
 
 def __newMemoryDumpHeaderRenderer() -> None:
     print("     ", end="")  
@@ -31,12 +31,15 @@ def __newMemoryDumpHeaderRenderer() -> None:
         print(f"{i:>9}", end="")  
     print("")  
 
-def __newMemoryRowRenderer(memory: list) -> None:
+def __newMemoryRowRenderer(memory: list, pointer_index: int = None) -> None:
     for i in range(0, len(memory), 10):  # Process in chunks of 10
         # Mimic address as memory row (multiples of 10)
         print(f"{i // 10:5}0", end="  ")
         for j in range(i, i + 10):
             if j < len(memory):  # Ensure we don’t go out of bounds
-                data = f"+{memory[j]}"
+                if pointer_index is not None and j == pointer_index:
+                    data = f"-> {memory[j]}"  # Add the ">" symbol for the pointed index
+                else:
+                    data = f"+{memory[j]}"
                 print(f"{data:>7}", end="  ")  # Print memory cell data
         print("")  # Newline after each row
