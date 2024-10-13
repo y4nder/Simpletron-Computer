@@ -1,4 +1,4 @@
-from Controller import Controller
+from ControllerFiles.Controller import Controller
 
 def read(controller: Controller, address: int, useDebug: bool = False):
     """Reads input into the memory address."""
