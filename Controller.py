@@ -20,7 +20,7 @@ class Controller(object):
     def getMemory(self) -> IMemory:
         return self.__memory
     
-    def run(self):
+    def run(self):            
         while True:
             instruction = self.__fetch_instruction()
             
@@ -41,9 +41,6 @@ class Controller(object):
             if self.debug:
                 input("\nPress any key to continue...")
                 
-
-                
-        
     def __fetch_instruction(self):
         instruction = self.__memory.read_data(self.__processor.programCounter)
         return instruction
@@ -64,5 +61,6 @@ class Controller(object):
         self.__processor.instructionRegister = instruction
         self.__processor.operationCode = operation_code
         self.__processor.operand = address 
+
 
 

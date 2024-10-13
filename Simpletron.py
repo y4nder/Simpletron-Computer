@@ -20,8 +20,7 @@ def create_components(fileAddress: str, useMnemonic: bool, useDebug: bool, **kwa
         print(f"Error loading memory: {e}")
     
     codes = OperationLibrary.OPERATION_CODES_DEFAULT
-    controller = Controller(processor, memory, operationCodes=codes, debug=useDebug)
-    
+    controller = Controller(processor, memory, operationCodes=codes, debug=useDebug)  
     return controller
 
 def run(fileAddress: str, useMnemonic: bool, useDebug: bool, **kwargs) -> None:
@@ -30,6 +29,7 @@ def run(fileAddress: str, useMnemonic: bool, useDebug: bool, **kwargs) -> None:
     if(useDebug):
         print("-" * 50)
         print("executing file")
+    
     
     controller.run()
 
@@ -41,7 +41,7 @@ def main() -> None:
     
     fileAddress: str = path.join("codes", args.filename)
     useMnemonic: bool = args.mp
-    useDebug: bool = args.debug
+    useDebug: bool = args.s
 
     run(fileAddress, useMnemonic, useDebug)
         

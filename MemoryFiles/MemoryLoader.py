@@ -24,6 +24,5 @@ class MemoryLoader(object):
             instruction: str = instruction.data
             self.__memory.store_data(address, instruction)
         
-        if self.debug:
-            print("-"*50)
-            print("\nload success\n")
+        print("*** Welcome to Simpletron ***")
+        print("*** Program Loaded Succesfully")
