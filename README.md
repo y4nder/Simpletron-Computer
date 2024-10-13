@@ -32,35 +32,12 @@ The Simpletron Computer is a simulated machine designed to execute basic machine
     py Simpletron.py <your_program_name>.sml
     ```
 
-### Example Usage (Mnemonics Syntax)
-
-1. create a file in the folder `codes` and name it `<your_program_name>`, save it as `.sml`
-
-    ```sml
-    read    08    ; get input and store to address 08 (Variable A)
-    read    09    ; get input and store to address 09 (Variable B)
-    load    08    ; load address 08 into accumulator (Variable A)
-    add     09    ; add address 09 (Variable B) to accumulator
-    store   10    ; store the value in accumulator to address 10 (Result C)
-    write   10    ; write the value from address 10 (Result C) to the screen
-    writeA  00    ; write the value in the accumulator to the screen
-    halt    00    ; Halt the program
-    data    00    ; Variable A
-    data    00    ; Variable B
-    data    00    ; Result C
-    ```
-
-2. run in terminal with argument `-mp`
-    ```bash
-    py Simpletron.py <program_name>.sml -mp
-    ```
-
 #### Optional Debugger
 
 running the program with debugger lets you view how the file is parsed and how the memory and accumulators are updated.
 
 ```bash
-py Simpletron.py <program_name>.sml -debug
+py Simpletron.py <program_name>.sml -s
 ```
 
 ---
