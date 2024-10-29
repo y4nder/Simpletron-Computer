@@ -34,6 +34,20 @@ class ComponentFactory:
         controller = Controller(processor, memory, operationCodes=codes, debug=useDebug)  
         return controller
     
+    '''Version 3 uses mnemonic parsing but now without addressses'''
+    def UseVersion3(fileAddress: str, useDebug: bool) -> Controller:
+        processor = ProcessorFactory.Processor_DEFAULT()
+        memory = MemoryFactory.MemorySingleList()
+        parser = ParserFactory.MnemonicParserV2(debug = useDebug)
+        memoryLoader = MemoryLoader(memory, parser, debug=useDebug)
+        
+        ComponentFactory.__runMemoryLoad(memoryLoader,fileAddress)
+        
+        codes = OperationLibrary.OPERATION_CODES_DEFAULT
+        
+        controller = Controller(processor, memory, operationCodes=codes, debug=useDebug)  
+        return controller
+    
     def __runMemoryLoad(memoryLoader: MemoryLoader, fileAddress: str) -> None:
         try: 
             memoryLoader.load(fileAddress)

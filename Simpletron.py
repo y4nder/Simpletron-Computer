@@ -3,7 +3,7 @@ from ControllerFiles.ComponentFactory import ComponentFactory
 from util.args_util import ArgumentFactory
 
 def run(fileAddress: str, useDebug: bool) -> None:
-    simpletron = ComponentFactory.UseVersion1(fileAddress, useDebug);
+    simpletron = ComponentFactory.UseVersion3(fileAddress, useDebug);
     if(useDebug):
         print("-" * 50)
         print("executing file")
