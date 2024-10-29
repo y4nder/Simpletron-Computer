@@ -1,3 +1,8 @@
+'''
+    test File : FactorialNew.sml (found in folder "codes")
+    test command: py Simpletron.py FactorialNew.sml -s
+'''
+
 from os import system, path
 from ControllerFiles.ComponentFactory import ComponentFactory
 from util.args_util import ArgumentFactory
@@ -7,7 +12,7 @@ def run(fileAddress: str, useDebug: bool) -> None:
     if(useDebug):
         print("-" * 50)
         print("executing file")
-    simpletron.run()
+    simpletron.run()    
 
 def main() -> None:
     args = ArgumentFactory.DEFAULT_ARGUMENTS()
@@ -23,3 +28,5 @@ def main() -> None:
 if __name__ == "__main__":
     system("cls")
     main()
+    
+    
