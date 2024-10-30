@@ -3,11 +3,12 @@ from TextProcessors.IParser import IParser
 from TextProcessors.Instruction import Instruction
 
 class MnemonicParserV2(IParser):
-    def __init__(self, mnemonicLibray = MnemonicLibrary, debug: bool = True):
+    def __init__(self,memoryLimit: int, mnemonicLibray = MnemonicLibrary, debug: bool = True):
         super().__init__(debug)
         self.mnemonicLibrary = mnemonicLibray.DEFAULT_MNEMONIC
         self.AddressMemoryCounter = 0;
         self.AddressMemoryDict = dict();
+        self.memoryLimit = memoryLimit
         self.HaltCommand = mnemonicLibray.HALT_COMMAND
         
         
@@ -71,7 +72,6 @@ class MnemonicParserV2(IParser):
             mnemonic = lineCommand[0]
             
             if(mnemonic == self.HaltCommand):
-                print(self.HaltCommand)
                 data = "00"
             else : 
                 if(mnemonic.startswith("J")):
@@ -99,7 +99,7 @@ class MnemonicParserV2(IParser):
             if(data in self.AddressMemoryDict):
                 return str(self.AddressMemoryDict[data])
             else:
-                self.AddressMemoryDict[data] = 99 - self.AddressMemoryCounter
+                self.AddressMemoryDict[data] = self.memoryLimit - self.AddressMemoryCounter
                 self.AddressMemoryCounter = self.AddressMemoryCounter + 1
                 return str(self.AddressMemoryDict[data])
         else:

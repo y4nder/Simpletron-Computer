@@ -11,8 +11,8 @@ class ParserFactory:
     def MnemonicParser(debug: bool = False) -> IParser:
         return MnemonicParser(debug=debug)
     
-    def MnemonicParserV2(debug: bool = False) -> IParser:
-        return MnemonicParserV2(debug=debug)
+    def MnemonicParserV2(memoryLimit: int = 99, debug: bool = False) -> IParser:
+        return MnemonicParserV2(memoryLimit=memoryLimit,debug=debug)
     
     
     

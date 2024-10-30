@@ -38,7 +38,7 @@ class ComponentFactory:
     def UseVersion3(fileAddress: str, useDebug: bool) -> Controller:
         processor = ProcessorFactory.Processor_DEFAULT()
         memory = MemoryFactory.MemorySingleList()
-        parser = ParserFactory.MnemonicParserV2(debug = useDebug)
+        parser = ParserFactory.MnemonicParserV2(memoryLimit = memory.get_memory_length(),debug = useDebug)
         memoryLoader = MemoryLoader(memory, parser, debug=useDebug)
         
         ComponentFactory.__runMemoryLoad(memoryLoader,fileAddress)

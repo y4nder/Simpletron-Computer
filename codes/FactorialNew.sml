@@ -15,5 +15,3 @@ Store   n           ;Store to variable n value of accumulator
 JMP     Y           ;Jump to level Y
 Write   fact := X   ;Write to the screen variable factorial	
 Halt    
-
-

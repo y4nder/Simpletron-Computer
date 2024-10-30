@@ -7,6 +7,9 @@ class MemorySingleList(IMemory):
         self.__memory = ["0000" for _ in range(size)]
         self.__validator = MemoryValidatorSingleList(self.__memory)
     
+    def get_memory_length(self):
+        return len(self.__memory) - 1
+    
     def store_data(self, address: int, data) -> bool:
         # Validate address
         if not self.__validator.validateAddress(address):
