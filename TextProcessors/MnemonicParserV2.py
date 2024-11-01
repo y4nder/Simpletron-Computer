@@ -3,13 +3,14 @@ from TextProcessors.IParser import IParser
 from TextProcessors.Instruction import Instruction
 
 class MnemonicParserV2(IParser):
-    def __init__(self,memoryLimit: int, mnemonicLibray = MnemonicLibrary, debug: bool = True):
+    def __init__(self, memoryLimit: int, mnemonicLibray = MnemonicLibrary, debug: bool = True):
         super().__init__(debug)
         self.mnemonicLibrary = mnemonicLibray.DEFAULT_MNEMONIC
         self.AddressMemoryCounter = 0;
         self.AddressMemoryDict = dict();
         self.memoryLimit = memoryLimit
         self.HaltCommand = mnemonicLibray.HALT_COMMAND
+        self.JumpMarker = mnemonicLibray.JUMP_MARKER
         
         
     def parse(self, fileAddress: str) -> list[Instruction]:
@@ -34,8 +35,7 @@ class MnemonicParserV2(IParser):
             return self.__cleanUp(splittedWords)
         
         except Exception as e:
-            print(f"Error occurred during file parsing: {e}")
-            return []
+            raise e
                 
     
     def __cleanUp(self, listOfCommands: list[list[str]])-> list[Instruction]:
@@ -61,32 +61,34 @@ class MnemonicParserV2(IParser):
                 
         return self.__assignMnemonic(sanitizedCommands)
                 
-    def __assignMnemonic(self, sanitizedCommands: list[list[str]])-> list[Instruction]:
-        lineCount: int = 0
+    def __assignMnemonic(self, sanitizedCommands: list[list[str]]) -> list[Instruction]:
         if self.debug:
-            print("\nassigning mnemonics\n")
-            
-        convertedCommands: list[Instruction] = []
-        for lineCommand in sanitizedCommands:
-            address = lineCount
-            mnemonic = lineCommand[0]
-            
-            if(mnemonic == self.HaltCommand):
+            print("\nAssigning mnemonics\n")
+
+        convertedCommands : list[Instruction]= [] 
+        labelAddressMap = {}
+
+        for address, lineCommand in enumerate(sanitizedCommands):
+            if len(lineCommand) > 2 and self.JumpMarker in lineCommand:
+                label = lineCommand[-1]
+                labelAddressMap[label] = address  
+
+        for address, lineCommand in enumerate(sanitizedCommands):
+            mnemonic = Mnemonic(lineCommand[0], address)
+            data:str
+            if mnemonic == self.HaltCommand:
                 data = "00"
-            else : 
-                if(mnemonic.startswith("J")):
-                    if(self.debug):
-                        print("found jump statement")
-                    data = self.__determineJumpAddress(lineCommand[1], sanitizedCommands)
-                else:
-                    data = self.__determinVariableAddress(lineCommand[1])  
-            
-            
-            opcode = str(self.mnemonicLibrary[mnemonic]) + data.zfill(2)
-            instuction = Instruction(int(address), opcode)
-            convertedCommands.append(instuction)
-            lineCount += 1
-            
+            elif mnemonic.IsJumpStatement():
+                if self.debug:
+                    print("Found jump statement")
+                data = labelAddressMap.get(lineCommand[1], "??")
+            else:
+                data = self.__determineVariableAddress(lineCommand[1])
+
+            opcode = str(self.mnemonicLibrary[mnemonic]) + str(data).zfill(2)
+            instruction = Instruction(int(address), opcode)
+            convertedCommands.append(instruction)
+
         return convertedCommands
             
     # helper methods
@@ -94,8 +96,8 @@ class MnemonicParserV2(IParser):
         return command == ";" or command.startswith(";")
     
     
-    def __determinVariableAddress(self, data:str):
-        if(data.isalpha()):
+    def __determineVariableAddress(self, data:str):
+        if data.isalpha():
             if(data in self.AddressMemoryDict):
                 return str(self.AddressMemoryDict[data])
             else:
@@ -104,14 +106,14 @@ class MnemonicParserV2(IParser):
                 return str(self.AddressMemoryDict[data])
         else:
             return data
-        
     
-    def __determineJumpAddress(self, variable: str, lineCommands):
-        lineCount:int = 0;
-        for command in lineCommands:
-            if(len(command) > 2 and command[3] == variable):
-                if(self.debug):
-                    print(f"{variable} jump address @ {lineCount}")
-                return str(lineCount).zfill(2)
-            lineCount = lineCount + 1   
-        return None
+class Mnemonic(str):
+    def __new__(cls, value, address):
+        if not MnemonicLibrary.DEFAULT_MNEMONIC.get(value):
+            raise ValueError(f"Unknown mnemonic: '{value}' at address: {address}")
+        
+        obj = super().__new__(cls, value)
+        return obj
+    
+    def IsJumpStatement(self):
+        return self.startswith("J") or self.startswith("j")

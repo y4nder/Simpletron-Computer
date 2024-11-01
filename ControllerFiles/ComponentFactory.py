@@ -52,4 +52,4 @@ class ComponentFactory:
         try: 
             memoryLoader.load(fileAddress)
         except Exception as e:
-            print(f"Erorr loading memory: {e}")
+            raise e

@@ -11,8 +11,11 @@ class MemoryLoader(object):
     def load(self, fileAddress: str):
         if self.debug:
             print("\nloading instructions to memory\n")
+        try:
+            parsedInstructions = self.__parser.parse(fileAddress)   
+        except Exception as e:
+            raise e
         
-        parsedInstructions = self.__parser.parse(fileAddress)   
         for instruction in parsedInstructions:
             if self.debug:
                 print(instruction)
