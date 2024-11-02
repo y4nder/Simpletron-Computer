@@ -1,6 +1,3 @@
-; Write a program that will read 10 numbers (using a loop) and will output the largest of the 10 numbers.
-; this is a comment
-
 loadI 10    ; init accumulator with limit 10
 store 20    ; store to address 20 the value of the accumulator
 loadI 00    ; reset the value of the accumulator to zero
@@ -18,3 +15,6 @@ load 22     ; store value of address 22 to accumulator
 jmp 03      ; loop back to input address 03
 write 22    ; write value of address 22
 halt 00 
+
+; Write a program that will read 10 numbers (using a loop) and will output the largest of the 10 numbers.
+; this is a comment

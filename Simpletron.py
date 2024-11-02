@@ -4,11 +4,11 @@
 '''
 
 from os import system, path
-from ControllerFiles.ComponentFactory import ComponentFactory
+from ControllerFiles.ComponentFactory import SimpletronFactory
 from util.args_util import ArgumentFactory
 
 def run(fileAddress: str, useDebug: bool) -> None:
-    simpletron = ComponentFactory.UseVersion3(fileAddress, useDebug);
+    simpletron = SimpletronFactory.UseVersion3(fileAddress, useDebug);
     if(useDebug):
         print("-" * 50)
         print("executing file")

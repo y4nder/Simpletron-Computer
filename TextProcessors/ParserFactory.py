@@ -1,6 +1,6 @@
 from TextProcessors.IParser import IParser
 from TextProcessors.LowLevelParser import LowLevelParser
-from TextProcessors.MnemonicParser import MnemonicParser
+from TextProcessors.MnemonicParser import MnemonicParserV1
 from TextProcessors.MnemonicParserV2 import MnemonicParserV2
 
 class ParserFactory:
@@ -8,8 +8,8 @@ class ParserFactory:
     def LowLevelParser(debug: bool = False) -> IParser:
         return LowLevelParser(debug)
     
-    def MnemonicParser(debug: bool = False) -> IParser:
-        return MnemonicParser(debug=debug)
+    def MnemonicParserV1(debug: bool = False) -> IParser:
+        return MnemonicParserV1(debug=debug)
     
     def MnemonicParserV2(memoryLimit: int = 99, debug: bool = False) -> IParser:
         return MnemonicParserV2(memoryLimit=memoryLimit,debug=debug)
@@ -18,7 +18,7 @@ class ParserFactory:
     
     def GetParser(useMnemonic: bool, debug: bool = False) -> IParser:
         if useMnemonic:
-            return MnemonicParser(debug=debug)
+            return MnemonicParserV1(debug=debug)
         else:
             return LowLevelParser(debug=debug)
         
