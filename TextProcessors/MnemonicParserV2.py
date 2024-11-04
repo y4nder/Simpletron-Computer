@@ -10,7 +10,7 @@ class MnemonicParserV2(IParser):
         self.AddressMemoryDict = dict();
         self.memoryLimit = memoryLimit
         self.HaltCommand = mnemonicLibray.HALT_COMMAND
-        self.JumpMarker = mnemonicLibray.JUMP_MARKER
+        self.JumpMarker = mnemonicLibray.JUMP_LABEL
         
         
     def parse(self, fileAddress: str) -> list[Instruction]:
@@ -84,7 +84,7 @@ class MnemonicParserV2(IParser):
             
             data:str
             
-            if mnemonic == self.HaltCommand:
+            if len(lineCommand) == 1:
                 data = "00"
             elif mnemonic.IsJumpStatement():
                 if self.debug:
@@ -111,7 +111,7 @@ class MnemonicParserV2(IParser):
                 return str(self.AddressMemoryDict[data])
             else:
                 self.AddressMemoryDict[data] = self.memoryLimit - self.AddressMemoryCounter
-                self.AddressMemoryCounter = self.AddressMemoryCounter + 1
+                self.AddressMemoryCounter += 1
                 return str(self.AddressMemoryDict[data])
         else:
             return data

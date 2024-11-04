@@ -10,6 +10,7 @@ class OperationLibrary(object):
         10: op.read,
         11: op.write,
         12: op.write_acc,
+        13: op.readI,
         20: op.loadM,
         21: op.store,
         22: op.loadI,

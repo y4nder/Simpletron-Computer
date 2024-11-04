@@ -1,8 +1,3 @@
-'''
-    test File : FactorialNew.sml (found in folder "codes")
-    test command: py Simpletron.py FactorialNew.sml -s
-'''
-
 from os import system, path
 from ControllerFiles.ComponentFactory import SimpletronFactory
 from util.args_util import ArgumentFactory

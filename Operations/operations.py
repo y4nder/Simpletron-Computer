@@ -26,7 +26,16 @@ def write_acc(controller: Controller, _, useDebug: bool = False):
     value = controller.getProcessor().accumulator
     print(f"accumulator: {value}")
     controller.getProcessor().incrementProgramCounter()
-
+    
+def readI(controller: Controller,_, useDebug: bool = False ):
+    """Reads input into the memory address."""
+    if useDebug:
+        print("-"*100)
+        print(f"Description: Read Value from keyboard and store to accumulator\n")
+    value = int(input("Enter a number: "))    
+    controller.getProcessor().accumulator = value
+    controller.getProcessor().incrementProgramCounter();
+    
 def loadM(controller: Controller, address, useDebug: bool = False):
     """Loads the value from memory into the accumulator."""
     if useDebug:

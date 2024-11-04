@@ -1,12 +1,13 @@
 class MnemonicLibrary(object):
     HALT_COMMAND:str = "Halt"
-    JUMP_MARKER: str = "Section"
+    JUMP_LABEL: str = "Section"
     
     DEFAULT_MNEMONIC = {
         "Data"  : 00,
         "Read"  : 10,
         "Write" : 11,
         "WriteA": 12,
+        "ReadI" : 13,
         "Load"  : 20,
         "Store" : 21,
         "LoadI" : 22,

@@ -1,0 +1,3 @@
+ReadI   
+WriteA  
+Halt
