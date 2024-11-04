@@ -1,3 +1,3 @@
-ReadI   
+ReadI 
 WriteA  
-Halt
+Halt 

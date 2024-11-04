@@ -28,4 +28,6 @@ class MnemonicLibrary(object):
         "clr"   : 50
     }
     
+    INDEPENDENT_MNEMONICS = ["WriteA", "ReadI", f"{HALT_COMMAND}"]
+    
     

@@ -12,7 +12,6 @@ class MnemonicParserV2(IParser):
         self.HaltCommand = mnemonicLibray.HALT_COMMAND
         self.JumpMarker = mnemonicLibray.JUMP_LABEL
         
-        
     def parse(self, fileAddress: str) -> list[Instruction]:
         return self.__start(fileAddress)
     
@@ -84,7 +83,7 @@ class MnemonicParserV2(IParser):
             
             data:str
             
-            if len(lineCommand) == 1:
+            if self._hasIndependentKeyWord(lineCommand, address):
                 data = "00"
             elif mnemonic.IsJumpStatement():
                 if self.debug:
@@ -99,8 +98,15 @@ class MnemonicParserV2(IParser):
             address = address + 1
 
         return convertedCommands
+
+    # helper methodss
+    def _hasIndependentKeyWord(self, lineCommand, address):
+        if len(lineCommand) == 1:
+            mnemonic = Mnemonic(lineCommand[0], address)
+            if mnemonic.IsIndependent():
+                return True
+        raise ValueError(f"invalid independent mnemonic usage {lineCommand[0]} at address {address}")
             
-    # helper methods
     def __isComment(self, command: str) -> bool:
         return command == ";" or command.startswith(";")
     
@@ -126,3 +132,7 @@ class Mnemonic(str):
     
     def IsJumpStatement(self):
         return self.startswith("J") or self.startswith("j")
+
+    def IsIndependent(self):
+        return self in MnemonicLibrary.INDEPENDENT_MNEMONICS
+            
