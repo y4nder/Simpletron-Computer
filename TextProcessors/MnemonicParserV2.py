@@ -68,14 +68,22 @@ class MnemonicParserV2(IParser):
         convertedCommands : list[Instruction]= [] 
         labelAddressMap = {}
 
-        for address, lineCommand in enumerate(sanitizedCommands):
+        address: int = 0
+        for lineCommand in sanitizedCommands:
             if len(lineCommand) > 2 and self.JumpMarker in lineCommand:
                 label = lineCommand[-1]
-                labelAddressMap[label] = address  
-
-        for address, lineCommand in enumerate(sanitizedCommands):
+                labelAddressMap[label] = address
+            else: 
+                address = address + 1
+        
+        address : int = 0
+        for lineCommand in sanitizedCommands:
+            if(lineCommand[0] == self.JumpMarker):
+                continue
             mnemonic = Mnemonic(lineCommand[0], address)
+            
             data:str
+            
             if mnemonic == self.HaltCommand:
                 data = "00"
             elif mnemonic.IsJumpStatement():
@@ -88,6 +96,7 @@ class MnemonicParserV2(IParser):
             opcode = str(self.mnemonicLibrary[mnemonic]) + str(data).zfill(2)
             instruction = Instruction(int(address), opcode)
             convertedCommands.append(instruction)
+            address = address + 1
 
         return convertedCommands
             

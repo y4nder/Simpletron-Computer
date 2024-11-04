@@ -1,14 +1,18 @@
-LoadI   03
+LoadI   3
 Store   A
 LoadI   00
-Read    B := Y
+
+Section : loop
+Read    B 
 Add     B
 Store   B
 Load    A
 SubI    01
-JZ      X
+JZ      display
 Store   A
 Load    B
-JMP     Y
-Write   B := X
+JMP     loop
+
+Section : display
+Write   B 
 Halt    

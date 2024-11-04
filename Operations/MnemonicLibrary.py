@@ -1,6 +1,6 @@
 class MnemonicLibrary(object):
     HALT_COMMAND:str = "Halt"
-    JUMP_MARKER: str = ":="
+    JUMP_MARKER: str = "Section"
     
     DEFAULT_MNEMONIC = {
         "Data"  : 00,
