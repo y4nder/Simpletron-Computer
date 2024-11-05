@@ -99,13 +99,14 @@ class MnemonicParserV2(IParser):
 
         return convertedCommands
 
-    # helper methodss
+    # helper methods
     def _hasIndependentKeyWord(self, lineCommand, address):
         if len(lineCommand) == 1:
             mnemonic = Mnemonic(lineCommand[0], address)
             if mnemonic.IsIndependent():
                 return True
-        raise ValueError(f"invalid independent mnemonic usage {lineCommand[0]} at address {address}")
+            else:
+                raise ValueError(f"invalid independent mnemonic usage {lineCommand[0]} at address {address}")
             
     def __isComment(self, command: str) -> bool:
         return command == ";" or command.startswith(";")
@@ -125,6 +126,7 @@ class MnemonicParserV2(IParser):
 class Mnemonic(str):
     def __new__(cls, value, address):
         if not MnemonicLibrary.DEFAULT_MNEMONIC.get(value):
+            print(f"error here")
             raise ValueError(f"Unknown mnemonic: '{value}' at address: {address}")
         
         obj = super().__new__(cls, value)
