@@ -30,4 +30,6 @@ class MnemonicLibrary(object):
     
     INDEPENDENT_MNEMONICS = ["WriteA", "ReadI", f"{HALT_COMMAND}"]
     
+    RESERVED_KEYWORDS = [JUMP_LABEL]
+    
     

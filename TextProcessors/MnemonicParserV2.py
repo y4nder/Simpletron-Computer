@@ -1,16 +1,15 @@
-from Operations.MnemonicLibrary import MnemonicLibrary
 from TextProcessors.IParser import IParser
 from TextProcessors.Instruction import Instruction
+from TextProcessors.Mnemonic import Mnemonic
+from TextProcessors.Opcode import Opcode
 
 class MnemonicParserV2(IParser):
-    def __init__(self, memoryLimit: int, mnemonicLibray = MnemonicLibrary, debug: bool = True):
+    def __init__(self, memoryLimit: int, debug: bool = True):
         super().__init__(debug)
-        self.mnemonicLibrary = mnemonicLibray.DEFAULT_MNEMONIC
         self.AddressMemoryCounter = 0;
         self.AddressMemoryDict = dict();
+        self.labelAddressMap = {};
         self.memoryLimit = memoryLimit
-        self.HaltCommand = mnemonicLibray.HALT_COMMAND
-        self.JumpMarker = mnemonicLibray.JUMP_LABEL
         
     def parse(self, fileAddress: str) -> list[Instruction]:
         return self.__start(fileAddress)
@@ -65,52 +64,45 @@ class MnemonicParserV2(IParser):
             print("\nAssigning mnemonics\n")
 
         convertedCommands : list[Instruction]= [] 
-        labelAddressMap = {}
-
+      
         address: int = 0
         for lineCommand in sanitizedCommands:
-            if len(lineCommand) > 2 and self.JumpMarker in lineCommand:
+            if Mnemonic.JumpMarkerExistsIn(lineCommand):
                 label = lineCommand[-1]
-                labelAddressMap[label] = address
+                self.labelAddressMap[label] = address
             else: 
-                address = address + 1
+                address +=1
         
         address : int = 0
         for lineCommand in sanitizedCommands:
-            if(lineCommand[0] == self.JumpMarker):
+            mnemonic = Mnemonic.ExtractFrom(lineCommand, address)
+            
+            if mnemonic.IsJumpMarker():
                 continue
-            mnemonic = Mnemonic(lineCommand[0], address)
             
-            data:str
+            data:int = self.__determineData(mnemonic, lineCommand, address)
             
-            if self._hasIndependentKeyWord(lineCommand, address):
-                data = "00"
-            elif mnemonic.IsJumpStatement():
-                if self.debug:
-                    print("Found jump statement")
-                data = labelAddressMap.get(lineCommand[1], "??")
-            else:
-                data = self.__determineVariableAddress(lineCommand[1])
-
-            opcode = str(self.mnemonicLibrary[mnemonic]) + str(data).zfill(2)
-            instruction = Instruction(int(address), opcode)
+            opcode = Opcode(mnemonic, data)
+            instruction = Instruction(address, opcode)
             convertedCommands.append(instruction)
-            address = address + 1
+            address += 1
 
         return convertedCommands
 
     # helper methods
-    def _hasIndependentKeyWord(self, lineCommand, address):
-        if len(lineCommand) == 1:
-            mnemonic = Mnemonic(lineCommand[0], address)
-            if mnemonic.IsIndependent():
-                return True
-            else:
-                raise ValueError(f"invalid independent mnemonic usage {lineCommand[0]} at address {address}")
+    def __determineData(self, mnemonic, lineCommand, address):
+        if mnemonic.IsIndependent(address, len(lineCommand)):
+            return 00
+        elif mnemonic.IsJumpStatement():
+            if self.debug:
+                print("Found jump statement")
+            return self.labelAddressMap.get(lineCommand[1], "??")
+        else:
+            return self.__determineVariableAddress(lineCommand[1])
+    
             
     def __isComment(self, command: str) -> bool:
         return command == ";" or command.startswith(";")
-    
     
     def __determineVariableAddress(self, data:str):
         if data.isalpha():
@@ -123,18 +115,7 @@ class MnemonicParserV2(IParser):
         else:
             return data
     
-class Mnemonic(str):
-    def __new__(cls, value, address):
-        if not MnemonicLibrary.DEFAULT_MNEMONIC.get(value):
-            print(f"error here")
-            raise ValueError(f"Unknown mnemonic: '{value}' at address: {address}")
-        
-        obj = super().__new__(cls, value)
-        return obj
-    
-    def IsJumpStatement(self):
-        return self.startswith("J") or self.startswith("j")
 
-    def IsIndependent(self):
-        return self in MnemonicLibrary.INDEPENDENT_MNEMONICS
-            
+    
+
+    

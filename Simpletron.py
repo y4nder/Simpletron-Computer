@@ -19,6 +19,7 @@ def main() -> None:
     useDebug: bool = args.s
 
     run(fileAddress, useDebug)
+
         
 if __name__ == "__main__":
     system("cls")

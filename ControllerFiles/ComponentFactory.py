@@ -9,7 +9,7 @@ from TextProcessors.ParserFactory import ParserFactory
 class SimpletronFactory:
     '''
         `UseVersion1()` : uses low level parsing [For opcode usage]
-        `UseVersion2()` : uses mnemonic parsing [depracated]
+        `UseVersion2()` : uses mnemonic parsing [deprecated]
         `UseVersion3()` : uses mnemonic parsing [updated]
     '''
     def UseVersion1(fileAddress: str, useDebug: bool = False) -> Controller:
