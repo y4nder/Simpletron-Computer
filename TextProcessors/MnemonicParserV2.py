@@ -90,28 +90,32 @@ class MnemonicParserV2(IParser):
         return convertedCommands
 
     # helper methods
-    def __determineData(self, mnemonic, lineCommand, address):
+    def __determineData(self, mnemonic: Mnemonic, lineCommand, address) -> int:
+        
         if mnemonic.IsIndependent(address, len(lineCommand)):
             return 00
-        elif mnemonic.IsJumpStatement():
+        
+        variable: str = lineCommand[1]
+        
+        if mnemonic.IsJumpStatement():
             if self.debug:
-                print("Found jump statement")
-            return self.labelAddressMap.get(lineCommand[1], "??")
+                print(f"Found jump statement {variable}")
+            return self.labelAddressMap.get(variable, "??")
         else:
-            return self.__determineVariableAddress(lineCommand[1])
+            return self.__determineVariableAddress(variable)
     
             
     def __isComment(self, command: str) -> bool:
         return command == ";" or command.startswith(";")
     
-    def __determineVariableAddress(self, data:str):
+    def __determineVariableAddress(self, data:str) -> int:
         if data.isalpha():
             if(data in self.AddressMemoryDict):
-                return str(self.AddressMemoryDict[data])
+                return self.AddressMemoryDict[data]
             else:
                 self.AddressMemoryDict[data] = self.memoryLimit - self.AddressMemoryCounter
                 self.AddressMemoryCounter += 1
-                return str(self.AddressMemoryDict[data])
+                return self.AddressMemoryDict[data]
         else:
             return data
     
