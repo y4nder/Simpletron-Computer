@@ -1,7 +1,7 @@
 from TextProcessors.IParser import IParser
-from TextProcessors.LowLevelParser import LowLevelParser
-from TextProcessors.MnemonicParser import MnemonicParserV1
-from TextProcessors.MnemonicParserV2 import MnemonicParserV2
+from TextProcessors.parsers.LowLevelParser import LowLevelParser
+from TextProcessors.parsers.MnemonicParser import MnemonicParserV1
+from TextProcessors.parsers.MnemonicParserV2 import MnemonicParserV2
 
 class ParserFactory:
     '''Parser for directly parsing simpletron operation codes'''
@@ -15,9 +15,3 @@ class ParserFactory:
         return MnemonicParserV2(memoryLimit=memoryLimit,debug=debug)
     
     
-    def GetParser(useMnemonic: bool, debug: bool = False) -> IParser:
-        if useMnemonic:
-            return MnemonicParserV1(debug=debug)
-        else:
-            return LowLevelParser(debug=debug)
-        

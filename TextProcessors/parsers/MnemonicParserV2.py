@@ -1,7 +1,7 @@
 from TextProcessors.IParser import IParser
-from TextProcessors.Instruction import Instruction
-from TextProcessors.Mnemonic import Mnemonic
-from TextProcessors.Opcode import Opcode
+from TextProcessors.entities.Instruction import Instruction
+from TextProcessors.entities.Mnemonic import Mnemonic
+from TextProcessors.entities.Opcode import Opcode
 
 class MnemonicParserV2(IParser):
     def __init__(self, memoryLimit: int, debug: bool = True):
@@ -34,7 +34,6 @@ class MnemonicParserV2(IParser):
         
         except Exception as e:
             raise e
-                
     
     def __cleanUp(self, listOfCommands: list[list[str]])-> list[Instruction]:
         if self.debug:

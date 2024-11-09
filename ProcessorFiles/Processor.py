@@ -1,3 +1,6 @@
+from TextProcessors.entities.Instruction import Instruction
+
+
 class Processor(object):
     def __init__(self):
         self.__accumulator = 0
@@ -64,3 +67,9 @@ class Processor(object):
         
     def __formatter(self, data, zeroes = 4):
         return str(data).zfill(zeroes)
+    
+    def update_state(self, instruction: Instruction):
+        operation_code, address = instruction.decode()
+        self.instructionRegister = instruction.data
+        self.operationCode = operation_code
+        self.operand = address

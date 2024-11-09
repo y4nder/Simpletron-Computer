@@ -1,6 +1,6 @@
 from Operations.MnemonicLibrary import MnemonicLibrary
 from TextProcessors.IParser import IParser
-from TextProcessors.Instruction import Instruction
+from TextProcessors.entities.Instruction import Instruction
 
 class MnemonicParserV1(IParser):
     def __init__(self, mnemonicLibray = MnemonicLibrary, debug: bool = True):

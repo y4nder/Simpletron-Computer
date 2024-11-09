@@ -1,6 +1,6 @@
 from MemoryFiles.Interface.IMemory import IMemory
 from TextProcessors.IParser import IParser
-from TextProcessors.Instruction import Instruction
+from TextProcessors.entities.Instruction import Instruction
 
 class MemoryLoader(object):
     def __init__(self, memory:IMemory, parser:IParser, debug: bool = False):
@@ -27,5 +27,4 @@ class MemoryLoader(object):
             instruction: str = instruction.data
             self.__memory.store_data(address, instruction)
         
-        print("*** Welcome to Simpletron ***")
-        print("*** Program Loaded Succesfully")
+        
