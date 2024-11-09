@@ -1,6 +1,7 @@
 from MemoryFiles.Interface.IMemory import IMemory
 from ProcessorFiles.Processor import Processor
 from typing import Callable
+from TextProcessors.entities.Instruction import Instruction
 
 
 class Controller(object):
@@ -13,54 +14,47 @@ class Controller(object):
         self.__processor = processor
         self.__memory = memory
         self.__operationCodes = operationCodes
-                
+                        
     def getProcessor(self) -> Processor:
         return self.__processor
     
     def getMemory(self) -> IMemory:
         return self.__memory
     
-    def run(self):            
+    def run(self):         
+        print("*** Welcome to Simpletron ***")
+        print("*** Program Loaded Succesfully ***\n")   
         while True:
-            instruction = self.__fetch_instruction()
+            instruction = self.__fetch_instruction();
             
             if self.debug:
                 print("-"*100)
                 print(f"Executing {instruction} ...")
             
-            operation_code, address = self.__decodeInstructions(instruction)
-            self.__update_processor_state(instruction, operation_code, address)
+            self.__processor.update_state(instruction)
             
             if self.debug:
                 print() 
                 self.__processor.dump()
                 self.__memory.dump(self.__processor.programCounter)
                 
-            self.__execute_instruction(operation_code, address)
+            self.__execute_instruction(instruction)
             
             if self.debug:
                 input("\nPress any key to continue...")
-                
-    def __fetch_instruction(self):
-        instruction = self.__memory.read_data(self.__processor.programCounter)
+                    
+    def __fetch_instruction(self) -> Instruction:
+        data = self.__memory.read_data(self.__processor.programCounter)
+        instruction = Instruction.encode(data=data, address= self.__processor.programCounter)
         return instruction
-        
-    def __decodeInstructions(self, instruction: str):
-        instruction = int(instruction)
-        operation_code = instruction //100
-        address = instruction % 100
-        return operation_code, address
-    
-    def __execute_instruction(self, operation_code, address):
+                    
+    def __execute_instruction(self, instruction: Instruction):
+        operation_code, address = instruction.decode()
         if operation_code in self.__operationCodes:
             self.__operationCodes[operation_code](self, address, useDebug = self.debug)
         else:
             raise ValueError(f"Invalid operation code: {operation_code}")
 
-    def __update_processor_state(self, instruction, operation_code, address):
-        self.__processor.instructionRegister = instruction
-        self.__processor.operationCode = operation_code
-        self.__processor.operand = address 
 
-
+    
 

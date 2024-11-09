@@ -1,4 +1,4 @@
-from TextProcessors.Mnemonic import Mnemonic
+from TextProcessors.entities.Mnemonic import Mnemonic
 
 class Opcode(str):
     def __new__(cls, mnemonic: Mnemonic, data: int):
