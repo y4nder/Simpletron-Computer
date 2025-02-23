@@ -2,10 +2,11 @@
     LUBGUBAN, Leander Lorenz B. BSCS3
 	Simpletron Memory
 """
-from MemoryFiles.Interface.IMemory import IMemory
+
 from MemoryFiles.Memories.MemoryTypes import MasterMemory as MainMemory
 from MemoryFiles.Validator.MemoryValidator import MemoryValidator as Validator
 from GUI.CLI import memorydumper as visualizeMemory_CLI
+from Types.IMemory import IMemory
 
 class Memory(IMemory):
     def __init__(self, memoryRows: int = 10, memoryCells: int = 10):

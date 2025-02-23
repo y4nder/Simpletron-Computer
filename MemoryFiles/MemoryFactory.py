@@ -1,19 +1,20 @@
-from MemoryFiles.Interface.IMemory import IMemory
+from enum import Enum
+
 from MemoryFiles.Memories.Memory import Memory
 from MemoryFiles.Memories.MemorySingleList import MemorySingleList
+from Types.IMemory import IMemory
 
 
-class MemoryFactory(object):
-    def Memory() -> IMemory:
-        """ Creates an Object Based Memory Bati nani, but keeping it for the design pattern 🎇
-        Returns:
-            IMemory: Memory
-        """
-        return Memory()
-    
-    def MemorySingleList() -> IMemory:
-        """ Creates a Memory That uses a single list simpler version, easy to debug 
-        Returns:
-            IMemory: MemorySingleList
-        """
-        return MemorySingleList()
+class MemoryType(str, Enum):
+    Object = "object"
+    Array = "array"
+
+class MemoryFactory(object):    
+    @staticmethod
+    def Use(memoryType: MemoryType) -> IMemory:
+        if memoryType == MemoryType.Object:
+            return Memory()
+        elif memoryType == MemoryType.Array:
+            return MemorySingleList()
+        else:
+            raise ValueError("Invalid Memory Type")

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IMemory(ABC):
     @abstractmethod
     def get_memory_length(self)-> int:
@@ -16,3 +17,4 @@ class IMemory(ABC):
     @abstractmethod
     def dump(self, pointer_index: int = None) -> bool:
         pass
+    

@@ -1,6 +1,6 @@
-from MemoryFiles.Interface.IMemory import IMemory
-from TextProcessors.IParser import IParser
 from TextProcessors.entities.Instruction import Instruction
+from Types.IMemory import IMemory
+from Types.IParser import IParser
 
 class MemoryLoader(object):
     def __init__(self, memory:IMemory, parser:IParser, debug: bool = False):
@@ -12,7 +12,7 @@ class MemoryLoader(object):
         if self.debug:
             print("\nloading instructions to memory\n")
         try:
-            parsedInstructions = self.__parser.parse(fileAddress)   
+            parsedInstructions: list[Instruction] = self.__parser.parse(fileAddress)   
         except Exception as e:
             raise e
         

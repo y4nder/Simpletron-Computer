@@ -1,6 +1,7 @@
-from MemoryFiles.Interface.IMemory import IMemory
 from GUI.CLI import singleListMemoryDumper as visualizer
 from MemoryFiles.Validator.MemomryValidatorSingleList import MemoryValidatorSingleList
+from Types.IMemory import IMemory
+
 
 class MemorySingleList(IMemory):
     def __init__(self, size: int = 100):

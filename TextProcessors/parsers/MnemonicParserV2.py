@@ -1,7 +1,7 @@
-from TextProcessors.IParser import IParser
 from TextProcessors.entities.Instruction import Instruction
 from TextProcessors.entities.Mnemonic import Mnemonic
 from TextProcessors.entities.Opcode import Opcode
+from Types.IParser import IParser
 
 class MnemonicParserV2(IParser):
     def __init__(self, memoryLimit: int, debug: bool = True):

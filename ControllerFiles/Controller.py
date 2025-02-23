@@ -1,10 +1,13 @@
-from MemoryFiles.Interface.IMemory import IMemory
 from ProcessorFiles.Processor import Processor
 from typing import Callable
 from TextProcessors.entities.Instruction import Instruction
+from Types.IController import IController
+from Types.IMemory import IMemory
 
 
-class Controller(object):
+
+
+class Controller(IController):
     '''
         The `Controller` class orchestrates the interaction between a `Processor` and `IMemory` to execute instructions. 
         It fetches, decodes, and executes instructions in a loop using provided operation codes.
@@ -15,10 +18,10 @@ class Controller(object):
         self.__memory = memory
         self.__operationCodes = operationCodes
                         
-    def getProcessor(self) -> Processor:
+    def get_processor_instance(self) -> Processor:
         return self.__processor
     
-    def getMemory(self) -> IMemory:
+    def get_memory_instance(self) -> IMemory:
         return self.__memory
     
     def run(self):         
@@ -45,7 +48,7 @@ class Controller(object):
                     
     def __fetch_instruction(self) -> Instruction:
         data = self.__memory.read_data(self.__processor.programCounter)
-        instruction = Instruction.encode(data=data, address= self.__processor.programCounter)
+        instruction = Instruction.encode(data=data, address=self.__processor.programCounter)
         return instruction
                     
     def __execute_instruction(self, instruction: Instruction):
