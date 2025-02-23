@@ -1,5 +1,5 @@
-from TextProcessors.IParser import IParser
 from TextProcessors.entities.Instruction import Instruction
+from Types.IParser import IParser
 
 class LowLevelParser(IParser):
     def __init__(self, debug: bool = False):

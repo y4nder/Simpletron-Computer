@@ -1,13 +1,19 @@
 from os import system, path
-from ControllerFiles.ComponentFactory import SimpletronFactory
+from ControllerFiles.ComponentFactory import SimpletronFactory, SmpVer
+from Types.IController import IController
 from util.args_util import ArgumentFactory
 
 def run(fileAddress: str, useDebug: bool) -> None:
-    simpletron = SimpletronFactory.UseVersion3(fileAddress, useDebug);
+    simpletron : IController = SimpletronFactory.Use(SmpVer.VERSION3, fileAddress, useDebug);
+    
+    if not isinstance(simpletron, IController):
+        raise ValueError("Invalid controller instance")
+    
     if(useDebug):
         print("-" * 50)
         print("executing file")
-    simpletron.run()    
+        
+    simpletron.run()   
 
 def main() -> None:
     args = ArgumentFactory.DEFAULT_ARGUMENTS()

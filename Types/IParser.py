@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-
 from TextProcessors.entities.Instruction import Instruction
+
 
 class IParser(ABC):
     def __init__(self, debug: bool):

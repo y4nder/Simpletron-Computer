@@ -1,5 +1,5 @@
-from MemoryFiles.Interface.IMemory import IMemory
-from MemoryFiles.Interface.IMemoryValidator import IMemoryValidator
+from Types import IMemory
+from Types.IMemoryValidator import IMemoryValidator
 
 
 class MemoryValidatorSingleList(IMemoryValidator):
