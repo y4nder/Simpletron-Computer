@@ -23,9 +23,11 @@ class Mnemonic(str):
     def IsJumpMarker(self):
         return self == MnemonicLibrary.JUMP_LABEL
     
+    @staticmethod
     def JumpMarkerExistsIn(lineCommand:list[str]):
         return MnemonicLibrary.JUMP_LABEL in lineCommand and len(lineCommand) > 2
     
+    @staticmethod
     def ExtractFrom(lineCommand: list[str], address: int):
         return Mnemonic(lineCommand[0], address)
     

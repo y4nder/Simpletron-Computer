@@ -6,7 +6,7 @@ from Types.IMemory import IMemory
 class MemorySingleList(IMemory):
     def __init__(self, size: int = 100):
         self.__memory = ["0000" for _ in range(size)]
-        self.__validator = MemoryValidatorSingleList(self.__memory)
+        self.__validator = MemoryValidatorSingleList(memory=self.__memory)
     
     def get_memory_length(self):
         return len(self.__memory) - 1
@@ -38,11 +38,11 @@ class MemorySingleList(IMemory):
     
     def read_data(self, address: int) -> int:
         if not self.__validator.validateAddress(address):
-            return ""
+            return -1
         else:
             return int(self.__memory[address])
     
-    def dump(self, pointer_index: int = None) -> bool:
+    def dump(self, pointer_index: int = -1) -> None:
         visualizer(self.__memory, pointer_index)
         
         

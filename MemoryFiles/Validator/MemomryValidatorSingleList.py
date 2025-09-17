@@ -1,14 +1,13 @@
-from Types import IMemory
 from Types.IMemoryValidator import IMemoryValidator
 
 
 class MemoryValidatorSingleList(IMemoryValidator):
-    def __init__(self, memory: IMemory):
+    def __init__(self, memory: list[str]):
         self.__memory = memory
     
     def validateAddress(self, address: int) -> bool:
         try:
-            cell = self.__memory[address]
+            self.__memory[address]
             return True
         except IndexError:
             print("invalid address")
