@@ -17,8 +17,8 @@ class Memory(IMemory):
     
     def __findCell(self, address: int):
         for mRow in self.__memoryInstance.getMemory():
-            if self.__currentRowMatchesAddress(address, mRow):
-                index_of_address = self.__findIndexOfAddress(address, mRow)
+            if self.__currentRowMatchesAddress(str(address), mRow):
+                index_of_address = self.__findIndexOfAddress(str(address), mRow)
                 if index_of_address != -1:
                     return mRow.getMemoryCells()[index_of_address]
                 else:
@@ -35,16 +35,16 @@ class Memory(IMemory):
         return self.__validator.validateAddress(address)
     
     def __dataValidator(self, data: int) -> bool:
-        return self.__validator.validateData(data)
+        return self.__validator.validateData(str(data))
     
     # Exposed APIs
     
     def store_data(self, address: int, data: str) -> bool:
-        validAddress = self.__addressValidator(address)
+        validAddress = self.__addressValidator(str(address))
         if not validAddress:
             return False
         
-        validData = self.__dataValidator(data)
+        validData = self.__dataValidator(int(data))
         if not validData:
             return False
         
@@ -57,15 +57,15 @@ class Memory(IMemory):
             return True
 
     def read_data(self, address: int) -> str:
-        validAddress = self.__addressValidator(address)
+        validAddress = self.__addressValidator(str(address))
         if not validAddress:
-            return False
+            return ""
         
         memoryCell = self.__findCell(address)
         if not memoryCell:
             return ""
         else:
-            return int(memoryCell.getData())
+            return str(memoryCell.getData())
         
     def dump(self)->bool:
         validMemoryStatus =  self.__validator.validateMemoryInstance()

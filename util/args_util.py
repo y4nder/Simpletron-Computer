@@ -1,6 +1,7 @@
 import argparse
 
 class ArgumentFactory:    
+    @staticmethod
     def DEFAULT_ARGUMENTS():
         argsParser = argparse.ArgumentParser(description="run simpletron script")
         argsParser.add_argument("filename", type=str, help="name of the file ending with .sml")

@@ -1,7 +1,8 @@
-from os import system, path
+from os import path
 from ControllerFiles.ComponentFactory import SimpletronFactory, SmpVer
 from Types.IController import IController
 from util.args_util import ArgumentFactory
+from util.cli_util import CLIUtlity
 
 def run(fileAddress: str, useDebug: bool) -> None:
     simpletron : IController = SimpletronFactory.Use(SmpVer.VERSION3, fileAddress, useDebug);
@@ -28,7 +29,7 @@ def main() -> None:
 
         
 if __name__ == "__main__":
-    system("cls")
+    CLIUtlity.clearConsole()
     main()
     
     

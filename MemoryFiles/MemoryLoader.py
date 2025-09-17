@@ -16,15 +16,13 @@ class MemoryLoader(object):
         except Exception as e:
             raise e
         
-        for instruction in parsedInstructions:
+        for parsedInstruction in parsedInstructions:
             if self.debug:
-                print(instruction)
+                print(parsedInstruction)
                 
-            if not isinstance(instruction, Instruction):
+            if not isinstance(parsedInstruction, Instruction):
                 raise TypeError("incorrect instruction type")            
         
-            address: int = instruction.address
-            instruction: str = instruction.data
+            address: int = parsedInstruction.address
+            instruction: str = parsedInstruction.data
             self.__memory.store_data(address, instruction)
-        
-        

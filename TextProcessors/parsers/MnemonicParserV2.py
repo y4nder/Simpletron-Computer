@@ -40,7 +40,7 @@ class MnemonicParserV2(IParser):
             print("-"*50)
             print("\nperform clean up\n")
             
-        sanitizedCommands = []
+        sanitizedCommands : list[list[str]] = []
         for lineCommand in listOfCommands:
             line = []
             for command in lineCommand:
@@ -65,7 +65,7 @@ class MnemonicParserV2(IParser):
         convertedCommands : list[Instruction]= [] 
       
         address: int = 0
-        for lineCommand in sanitizedCommands:
+        for lineCommand in sanitizedCommands:                 
             if Mnemonic.JumpMarkerExistsIn(lineCommand):
                 label = lineCommand[-1]
                 self.labelAddressMap[label] = address
@@ -116,9 +116,4 @@ class MnemonicParserV2(IParser):
                 self.AddressMemoryCounter += 1
                 return self.AddressMemoryDict[data]
         else:
-            return data
-    
-
-    
-
-    
+            return int(data)
